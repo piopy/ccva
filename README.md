@@ -5,7 +5,7 @@
 ### DESCRIPTION 
 
 ccva is software that came to my mind watching mr robot series.
-It allows you to hide more files into another one (.mp3 , .jpg tested) with the possibility of crypt it using the AES256 method
+It allows you to hide more files into another one (.mp3 , .jpg, .pdf tested) with the possibility of crypt it using the AES256 method
 
 
 p.s. i am NOT responsible for any damages or data loss. If you will contact me
