@@ -15,3 +15,12 @@ D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.Properties.Resources.resources
 D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.csproj.GenerateResource.Cache
 D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.exe
 D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.pdb
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.exe.config
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.exe
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.pdb
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.csprojResolveAssemblyReference.cache
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.MainForm.resources
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.Properties.Resources.resources
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.csproj.GenerateResource.Cache
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.exe
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.pdb
