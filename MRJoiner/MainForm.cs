@@ -151,7 +151,7 @@ namespace MRJoiner
                 textBox6.Text = "";
                 textBox6.Text = outp;
                 currentDir = Path.GetDirectoryName(outp);
-                string dec = Path.GetDirectoryName(outp) + "\\TYRELLIOT";
+                string dec = Path.GetDirectoryName(outp) + "\\Decrypted";
                 outfile.Text = dec;
                 passD = passDEC.Text;
 

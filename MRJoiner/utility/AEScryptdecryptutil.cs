@@ -11,7 +11,7 @@ namespace MRJoiner.utility
 
         public static void EncryptFile(string source, string password)
         {
-            string path = Path.GetDirectoryName(source);
+            string path = source;
             if (!System.IO.File.Exists(path))
             {
                 Console.WriteLine("No Such File");
@@ -21,16 +21,16 @@ namespace MRJoiner.utility
             byte[] bytes = File.ReadAllBytes(path);
             byte[] encrypted_bytes = Encrypt(bytes, password);
 
-            path += "crypt.data";
+            //path += "crypt.data";
+            //REPLACE
 
-            if (!System.IO.File.Exists(path))
+            if (System.IO.File.Exists(path))
             {
-                FileStream fs = System.IO.File.Create(path);
-                fs.Close();
+                File.Delete(path);
             }
 
             File.WriteAllBytes(path, encrypted_bytes);
-            //Console.WriteLine("Encryption Successful");
+            Console.WriteLine("Encryption Successful");
         }
 
         public static void DecryptFile(string source, string password)
@@ -38,7 +38,7 @@ namespace MRJoiner.utility
             string path = source;
             if (!System.IO.File.Exists(path))
             {
-                //Console.WriteLine("No Such File");
+                Console.WriteLine("No Such File");
                 return;
             }
 
@@ -50,14 +50,15 @@ namespace MRJoiner.utility
             }
             catch (UnauthorizedAccessException e)
             {
-                //Console.WriteLine("Incorrect password");
+                Console.WriteLine("Incorrect password");
                 return;
             }
 
             // string path = Path.GetDirectoryName(source);
+            string tempF = Path.GetDirectoryName(source) + "\\Decrypted";
+            if(!Directory.Exists(tempF)) Directory.CreateDirectory(tempF);
 
-
-            path = Path.GetDirectoryName(source) + "\\Decrypted\\" + Path.GetFileName(source);
+            path = tempF + "\\" +Path.GetFileName(source);
 
             if (!System.IO.File.Exists(path))
             {
@@ -66,7 +67,7 @@ namespace MRJoiner.utility
             }
 
             File.WriteAllBytes(path, decrypted_bytes);
-            //Console.WriteLine("Decryption Successful");
+            Console.WriteLine("Decryption Successful");
         }
 
         public static byte[] Encrypt(byte[] data, string password)
