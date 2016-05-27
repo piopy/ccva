@@ -50,7 +50,7 @@ namespace MRJoiner.utility
             }
             catch (UnauthorizedAccessException e)
             {
-                Console.WriteLine("Incorrect password");
+                Console.WriteLine("Exception caught Incorrect Password: {0}", e);
                 return;
             }
 
