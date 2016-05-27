@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // set di attributi. Modificare i valori di questi attributi per modificare le informazioni
 // associate a un assembly.
 [assembly: AssemblyTitle("MRJoiner")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("v 1.0 - I Want Coffee")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("BurningHAM18")]
 [assembly: AssemblyProduct("MRJoiner")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("BurningHAM18")]
 [assembly: AssemblyCulture("")]
 
 // Se si imposta ComVisible su false, i tipi in questo assembly non saranno visibili 

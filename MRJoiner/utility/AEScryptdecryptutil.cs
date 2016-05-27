@@ -129,9 +129,9 @@ namespace MRJoiner.utility
                         }
 
                         byte[] final = result.ToArray();
-                        if (Convert.ToBase64String(hash) != Convert.ToBase64String(h.ComputeHash(final)))
-                            throw new UnauthorizedAccessException();
-
+                        /*if (Convert.ToBase64String(hash) != Convert.ToBase64String(h.ComputeHash(final)))
+                            throw new UnauthorizedAccessException();*/
+                            
                         return final;
                     }
                 }

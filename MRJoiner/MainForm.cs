@@ -11,9 +11,8 @@ using System.Windows.Forms;
 using System.IO.Compression;
 using MRJoiner.utility;
 using System.Runtime.InteropServices;
-/*
-PRIMA PARTE VA DA VEDERE CRYPT E DECRYPT
-*/
+
+
 namespace MRJoiner
 {
     public partial class MainForm : Form
@@ -54,9 +53,6 @@ namespace MRJoiner
                 textBox1.Text = "";
                 textBox1.Text=filetoover;
                 currentDir = Path.GetDirectoryName(filetoover);
-                // 
-
-                //cartella dove verra salvato il file ultimato
                 outputS = Path.GetDirectoryName(filetoover)+"\\Joined";
                 outputtext.Text = outputS;
             }
@@ -103,40 +99,57 @@ namespace MRJoiner
 
         private void StartJ_Click(object sender, EventArgs e)
         {
-            try {  Directory.Delete(currentDir + "\\temp_zip",true);  } catch (Exception ex) { }
-            try { Directory.Delete(outputS,true); } catch (Exception ex) { }
-            
-            //zip files
-            Directory.CreateDirectory(currentDir + "\\temp_zip");
-            string copiedFilesPath = currentDir + "\\temp_zip";
-            
-            foreach (string s in filetozip)
+            if (textBox1.Text != "" && textBox2.Text != "")
             {
-                try { File.Copy(s, copiedFilesPath + "\\" + Path.GetFileName(s)); }
-                catch (IOException e2) { }
-            }
-            string zipfile = currentDir + "\\zipped.zip";
-            try { File.Delete(zipfile); } catch (Exception e3) { }
-            ZipFile.CreateFromDirectory(copiedFilesPath,zipfile);
-            
-            
-            //encrypt?
-            if (encryption)
-            {
-                passwordEN = pass.Text;
-                //byte[] converted = AEScryptdecryptutil.encrypt(passwordEN , zipfile);
-                //try { File.Delete(zipfile); } catch (Exception e3) { }
-                //File.WriteAllBytes(zipfile, converted);
-                AEScryptdecryptutil.EncryptFile(zipfile, passwordEN);
-                //MessageBox.Show("sono qui");
-            }
 
-            //join files
-            Directory.CreateDirectory(outputS);
-            cmd.runCommand("copy /b \""+filetoover+"\"+"+"\""+zipfile+"\" \""+outputS+"\\"+Path.GetFileName(filetoover)+"\"");
-            
-            try { File.Delete(zipfile); } catch (Exception e3) { }
-            try { Directory.Delete(currentDir + "\\temp_zip", true); } catch (Exception ex) { }
+                try { Directory.Delete(currentDir + "\\temp_zip", true); } catch (Exception ex) { }
+                try { Directory.Delete(outputS, true); } catch (Exception ex) { }
+
+
+
+                //zip files
+                Directory.CreateDirectory(currentDir + "\\temp_zip");
+                string copiedFilesPath = currentDir + "\\temp_zip";
+
+                foreach (string s in filetozip)
+                {
+                    try { File.Copy(s, copiedFilesPath + "\\" + Path.GetFileName(s)); }
+                    catch (IOException e2) { }
+                }
+
+                ////encrypt?
+                if (encryption)
+                {
+                    passwordEN = pass.Text;
+                    if (passwordEN != "")
+                    {
+                        foreach (string s in Directory.GetFiles(copiedFilesPath))
+                        {
+                            AEScryptdecryptutil.EncryptFile(s, passwordEN);
+                        }
+                    }
+
+
+                }
+
+
+                string zipfile = currentDir + "\\zipped.zip";
+                try { File.Delete(zipfile); } catch (Exception e3) { }
+                ZipFile.CreateFromDirectory(copiedFilesPath, zipfile);
+
+
+
+
+                //join files
+                Directory.CreateDirectory(outputS);
+                cmd.runCommand("copy /b \"" + filetoover + "\"+" + "\"" + zipfile + "\" \"" + outputS + "\\" + Path.GetFileName(filetoover) + "\"");
+
+                MessageBox.Show("File(s) joined!");
+
+                //try { File.Delete(zipfile); } catch (Exception e3) { }
+                //try { Directory.Delete(currentDir + "\\temp_zip", true); } catch (Exception ex) { }
+            }
+            else MessageBox.Show("Something is missed!");
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -153,20 +166,25 @@ namespace MRJoiner
                 currentDir = Path.GetDirectoryName(outp);
                 string dec = Path.GetDirectoryName(outp) + "\\Decrypted";
                 outfile.Text = dec;
-                passD = passDEC.Text;
-
                 
             }
         }
 
         private void StartD_Click(object sender, EventArgs e)
         {
-            //byte[] converted = AEScryptdecryptutil.decrypt(passD, outp);
-            //Directory.CreateDirectory(currentDir + "\\TYRELLIOT");
-            //File.WriteAllBytes(currentDir + "\\TYRELLIOT" + "\\zippedfileswithprevious.extension", converted);
-            AEScryptdecryptutil.DecryptFile(outp, passD);
+            if (textBox6.Text != "")
+            {
+                passD = passDEC.Text;
+
+                AEScryptdecryptutil.DecryptFile(outp, passD);
+                MessageBox.Show("File decrypted!");
+            }
+            else MessageBox.Show("Select a file first!");
         }
 
-        
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/BurningHAM18");
+        }
     }
 }

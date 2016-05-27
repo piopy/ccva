@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.fileToOverride = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -51,6 +52,7 @@
             this.yesEnc = new System.Windows.Forms.CheckBox();
             this.noEnc = new System.Windows.Forms.CheckBox();
             this.StartJ = new System.Windows.Forms.Button();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.decryptbox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -280,11 +282,23 @@
             this.StartJ.UseVisualStyleBackColor = true;
             this.StartJ.Click += new System.EventHandler(this.StartJ_Click);
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(15, 369);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(257, 13);
+            this.linkLabel1.TabIndex = 17;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "by BurningHam, Copyright 2016, Apache 2.0 License";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(468, 370);
+            this.ClientSize = new System.Drawing.Size(468, 391);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.StartJ);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.decryptbox);
@@ -296,11 +310,12 @@
             this.Controls.Add(this.filestozip);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.fileToOverride);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(484, 409);
-            this.MinimumSize = new System.Drawing.Size(484, 409);
+            this.MaximumSize = new System.Drawing.Size(484, 430);
+            this.MinimumSize = new System.Drawing.Size(484, 430);
             this.Name = "MainForm";
-            this.Text = "TYRELLIOT Joiner";
+            this.Text = "ccva";
             this.decryptbox.ResumeLayout(false);
             this.decryptbox.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -335,6 +350,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox outfile;
         private System.Windows.Forms.Button StartJ;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 
