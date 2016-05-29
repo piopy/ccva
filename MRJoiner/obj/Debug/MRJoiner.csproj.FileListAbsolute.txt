@@ -7,11 +7,3 @@ c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\
 c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\obj\Debug\MRJoiner.csproj.GenerateResource.Cache
 c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\obj\Debug\MRJoiner.exe
 c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\obj\Debug\MRJoiner.pdb
-D:\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.exe.config
-D:\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.exe
-D:\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.pdb
-D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.MainForm.resources
-D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.Properties.Resources.resources
-D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.csproj.GenerateResource.Cache
-D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.exe
-D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.pdb

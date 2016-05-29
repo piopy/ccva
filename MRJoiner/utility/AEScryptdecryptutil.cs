@@ -24,22 +24,25 @@ namespace MRJoiner.utility
             //path += "crypt.data";
             //REPLACE
 
-            if (System.IO.File.Exists(path))
+            /*if (System.IO.File.Exists(path))
             {
                 File.Delete(path);
             }
+            */
+            path += "_cr";
 
             File.WriteAllBytes(path, encrypted_bytes);
             Console.WriteLine("Encryption Successful");
         }
 
-        public static void DecryptFile(string source, string password)
+        public static bool DecryptFile(string source, string password)
         {
             string path = source;
             if (!System.IO.File.Exists(path))
             {
                 Console.WriteLine("No Such File");
-                return;
+
+                throw new UnauthorizedAccessException();
             }
 
             byte[] bytes = File.ReadAllBytes(path);
@@ -51,7 +54,8 @@ namespace MRJoiner.utility
             catch (UnauthorizedAccessException e)
             {
                 Console.WriteLine("Incorrect password");
-                return;
+                
+                throw new UnauthorizedAccessException();
             }
 
             // string path = Path.GetDirectoryName(source);
@@ -67,7 +71,8 @@ namespace MRJoiner.utility
             }
 
             File.WriteAllBytes(path, decrypted_bytes);
-            Console.WriteLine("Decryption Successful");
+            //Console.WriteLine("Decryption Successful");
+            return true;
         }
 
         public static byte[] Encrypt(byte[] data, string password)

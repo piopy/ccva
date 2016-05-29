@@ -35,6 +35,7 @@ namespace MRJoiner
         //decrypt
         string outp="";
         string passD = "";
+        string[] outpD;
 
 
         public MainForm()
@@ -155,16 +156,20 @@ namespace MRJoiner
         private void button2_Click(object sender, EventArgs e)
         {
             OpenFileDialog result = new OpenFileDialog();
-
+            result.Multiselect = true;
             if (result.ShowDialog() == DialogResult.OK)
             {
                 passDEC.Enabled = true;
                 
-                outp = result.FileName;
+                outpD = result.FileNames;
                 textBox6.Text = "";
-                textBox6.Text = outp;
-                currentDir = Path.GetDirectoryName(outp);
-                string dec = Path.GetDirectoryName(outp) + "\\Decrypted";
+                foreach(string s in outpD)
+                {
+                    textBox6.Text += "\""+Path.GetFileName(s)+"\" ";
+                }
+                
+                currentDir = Path.GetDirectoryName(outpD[1]);
+                string dec = currentDir + "\\Decrypted";
                 outfile.Text = dec;
                 
             }
@@ -174,12 +179,25 @@ namespace MRJoiner
         {
             if (textBox6.Text != "")
             {
+                bool control = false;
                 passD = passDEC.Text;
+                foreach (string s in outpD)
+                {
+                    try { control = AEScryptdecryptutil.DecryptFile(s, passD); }
+                    catch (UnauthorizedAccessException e1)
+                    {
+                        control = false;
+                        MessageBox.Show("Incorrect password");
+                        if (Directory.Exists(Path.GetDirectoryName(s) + "\\Decrypted")) Directory.Delete(Path.GetDirectoryName(s) + "\\Decrypted", true);
+                    }
+                    if (control == false) break;
+                }
 
-                AEScryptdecryptutil.DecryptFile(outp, passD);
-                MessageBox.Show("File decrypted!");
+                if (control==true) MessageBox.Show("File decrypted!");
             }
             else MessageBox.Show("Select a file first!");
+
+            
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
