@@ -19,7 +19,7 @@ p.s. i am NOT responsible for any damages or data loss. If you will contact me
 - Download the last release from [here](https://github.com/BurningHAM18/ccva/).
 - Unzip and run 
 `
-Program/MRJoiner.exe
+Program/ccva.exe
 `
 - Choose the "base" file
 - Choose the files to be hidden/joined
