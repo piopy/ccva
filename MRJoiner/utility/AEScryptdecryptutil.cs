@@ -53,9 +53,14 @@ namespace MRJoiner.utility
             }
             catch (UnauthorizedAccessException e)
             {
+<<<<<<< HEAD
                 Console.WriteLine("Incorrect password");
                 
                 throw new UnauthorizedAccessException();
+=======
+                Console.WriteLine("Exception caught Incorrect Password: {0}", e);
+                return;
+>>>>>>> 468909d28310d31b17cc688068fa21f253814ba3
             }
 
             // string path = Path.GetDirectoryName(source);

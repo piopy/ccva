@@ -103,19 +103,40 @@ namespace MRJoiner
             if (textBox1.Text != "" && textBox2.Text != "")
             {
 
-                try { Directory.Delete(currentDir + "\\temp_zip", true); } catch (Exception ex) { }
-                try { Directory.Delete(outputS, true); } catch (Exception ex) { }
+                try {
+                    Directory.Delete(currentDir + "\\temp_zip", true);
+                }
+                catch (IOException ex) {
+                    Console.WriteLine("Exception caught: {0}", ex);
+                }
 
-
+                try {
+                    Directory.Delete(outputS, true);
+                }
+                catch (IOException ex) {
+                    Console.WriteLine("Exception caught: {0}", ex);
+                }
 
                 //zip files
-                Directory.CreateDirectory(currentDir + "\\temp_zip");
+                try
+                {
+                    Directory.CreateDirectory(currentDir + "\\temp_zip");
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine("Exception caught: {0}", ex);
+                }
                 string copiedFilesPath = currentDir + "\\temp_zip";
 
                 foreach (string s in filetozip)
                 {
-                    try { File.Copy(s, copiedFilesPath + "\\" + Path.GetFileName(s)); }
-                    catch (IOException e2) { }
+                    try {
+                        File.Copy(s, copiedFilesPath + "\\" + Path.GetFileName(s));
+                    }
+                    catch (IOException e2)
+                    {
+                        Console.WriteLine("Exception caught: {0}", e2);
+                    }
                 }
 
                 ////encrypt?
@@ -129,17 +150,25 @@ namespace MRJoiner
                             AEScryptdecryptutil.EncryptFile(s, passwordEN);
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("Encryption Password Missing! Please retry!", "Missing Password!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    }
 
 
                 }
 
 
                 string zipfile = currentDir + "\\zipped.zip";
-                try { File.Delete(zipfile); } catch (Exception e3) { }
+                try {
+                    File.Delete(zipfile);
+                }
+
+                catch (Exception e3) {
+                    Console.WriteLine("Exception caught: {0}", e3);
+                }
+
                 ZipFile.CreateFromDirectory(copiedFilesPath, zipfile);
-
-
-
 
                 //join files
                 Directory.CreateDirectory(outputS);
