@@ -197,7 +197,7 @@ namespace MRJoiner
                     textBox6.Text += "\""+Path.GetFileName(s)+"\" ";
                 }
                 
-                currentDir = Path.GetDirectoryName(outpD[1]);
+                currentDir = Path.GetDirectoryName(outpD[0]);
                 string dec = currentDir + "\\Decrypted";
                 outfile.Text = dec;
                 

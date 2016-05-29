@@ -53,21 +53,20 @@ namespace MRJoiner.utility
             }
             catch (UnauthorizedAccessException e)
             {
-<<<<<<< HEAD
+
                 Console.WriteLine("Incorrect password");
-                
+
                 throw new UnauthorizedAccessException();
-=======
+
                 Console.WriteLine("Exception caught Incorrect Password: {0}", e);
-                return;
->>>>>>> 468909d28310d31b17cc688068fa21f253814ba3
+                return false;
             }
 
             // string path = Path.GetDirectoryName(source);
             string tempF = Path.GetDirectoryName(source) + "\\Decrypted";
-            if(!Directory.Exists(tempF)) Directory.CreateDirectory(tempF);
+            if (!Directory.Exists(tempF)) Directory.CreateDirectory(tempF);
 
-            path = tempF + "\\" +Path.GetFileName(source);
+            path = tempF + "\\" + Path.GetFileName(source);
 
             if (!System.IO.File.Exists(path))
             {
@@ -87,12 +86,12 @@ namespace MRJoiner.utility
             {
                 byte[] salt = new byte[32];
                 new RNGCryptoServiceProvider().GetBytes(salt);
-                Rfc2898DeriveBytes derivedKey = new Rfc2898DeriveBytes(password, salt) {IterationCount = 10000};
+                Rfc2898DeriveBytes derivedKey = new Rfc2898DeriveBytes(password, salt) { IterationCount = 10000 };
                 m.KeySize = 256;
                 m.BlockSize = 256;
                 byte[] hash = h.ComputeHash(data);
-                m.Key = derivedKey.GetBytes(m.KeySize/8);
-                m.IV = derivedKey.GetBytes(m.BlockSize/8);
+                m.Key = derivedKey.GetBytes(m.KeySize / 8);
+                m.IV = derivedKey.GetBytes(m.BlockSize / 8);
 
                 using (MemoryStream ms = new MemoryStream())
                 {
@@ -108,7 +107,7 @@ namespace MRJoiner.utility
             }
         }
 
-        public static byte[] Decrypt(byte[] data, string password) 
+        public static byte[] Decrypt(byte[] data, string password)
         {
             using (MemoryStream ms = new MemoryStream(data, false))
             using (RijndaelManaged m = new RijndaelManaged())
@@ -141,7 +140,7 @@ namespace MRJoiner.utility
                         byte[] final = result.ToArray();
                         /*if (Convert.ToBase64String(hash) != Convert.ToBase64String(h.ComputeHash(final)))
                             throw new UnauthorizedAccessException();*/
-                            
+
                         return final;
                     }
                 }

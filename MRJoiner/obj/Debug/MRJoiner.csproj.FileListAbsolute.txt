@@ -1,29 +1,9 @@
-c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\bin\Debug\MRJoiner.exe.config
-c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\bin\Debug\MRJoiner.exe
-c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\bin\Debug\MRJoiner.pdb
-c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\obj\Debug\MRJoiner.csprojResolveAssemblyReference.cache
-c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\obj\Debug\MRJoiner.MainForm.resources
-c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\obj\Debug\MRJoiner.Properties.Resources.resources
-c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\obj\Debug\MRJoiner.csproj.GenerateResource.Cache
-c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\obj\Debug\MRJoiner.exe
-c:\users\anton\onedrive\documenti\visual studio 2015\Projects\MRJoiner\MRJoiner\obj\Debug\MRJoiner.pdb
-<<<<<<< HEAD
-=======
 D:\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.exe.config
 D:\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.exe
 D:\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.pdb
+D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.csprojResolveAssemblyReference.cache
 D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.MainForm.resources
 D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.Properties.Resources.resources
 D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.csproj.GenerateResource.Cache
 D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.exe
 D:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.pdb
-C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.exe.config
-C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.exe
-C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.pdb
-C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.csprojResolveAssemblyReference.cache
-C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.MainForm.resources
-C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.Properties.Resources.resources
-C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.csproj.GenerateResource.Cache
-C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.exe
-C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\bin\Debug\MRJoiner.pdb
->>>>>>> 468909d28310d31b17cc688068fa21f253814ba3
