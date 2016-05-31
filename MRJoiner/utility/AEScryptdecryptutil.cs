@@ -24,12 +24,12 @@ namespace MRJoiner.utility
             //path += "crypt.data";
             //REPLACE
 
-            /*if (System.IO.File.Exists(path))
+            if (System.IO.File.Exists(path))
             {
                 File.Delete(path);
             }
-            */
-            path += "_cr";
+            
+            //path += "_cr";
 
             File.WriteAllBytes(path, encrypted_bytes);
             Console.WriteLine("Encryption Successful");
