@@ -1,0 +1,9 @@
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\bin\Debug\ccva.exe.config
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\bin\Debug\ccva.exe
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\bin\Debug\ccva.pdb
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\ccva.csprojResolveAssemblyReference.cache
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.MainForm.resources
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.Properties.Resources.resources
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\ccva.csproj.GenerateResource.Cache
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\ccva.exe
+C:\Users\Cttynul\Documents\GitHub\ccva\MRJoiner\obj\Debug\ccva.pdb
