@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using System.IO.Compression;
 using MRJoiner.utility;
 using System.Runtime.InteropServices;
-
+using System.Threading;
 
 namespace MRJoiner
 {
@@ -36,6 +36,10 @@ namespace MRJoiner
         string outp="";
         string passD = "";
         string[] outpD;
+
+        //robe a cazzo
+        string filetobeopened="";
+        string winrarPath = "";
 
 
         public MainForm()
@@ -160,6 +164,8 @@ namespace MRJoiner
 
 
                 string zipfile = currentDir + "\\zipped.zip";
+                
+
                 try {
                     File.Delete(zipfile);
                 }
@@ -170,11 +176,15 @@ namespace MRJoiner
 
                 ZipFile.CreateFromDirectory(copiedFilesPath, zipfile);
 
-                //join files
+                //join files e cazzo cancella i file temporanei
                 Directory.CreateDirectory(outputS);
                 cmd.runCommand("copy /b \"" + filetoover + "\"+" + "\"" + zipfile + "\" \"" + outputS + "\\" + Path.GetFileName(filetoover) + "\"");
+                cmd.runCommand("rm" + " " + zipfile);
+                cmd.runCommand("rmdir /s /q" + " " + copiedFilesPath);
 
                 MessageBox.Show("File(s) joined!");
+
+                
 
                 //try { File.Delete(zipfile); } catch (Exception e3) { }
                 //try { Directory.Delete(currentDir + "\\temp_zip", true); } catch (Exception ex) { }
@@ -231,7 +241,155 @@ namespace MRJoiner
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/BurningHAM18");
+            System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=H_DiH7wnsMo");
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            //checko se esiste winrar
+            doesWinRarExist();
+
+            if (Directory.Exists("C:\\Temp\\"))
+            {
+                // ok
+            }
+            else
+            {
+                try
+            {
+                    Directory.CreateDirectory("C:\\Temp\\");
+                }
+            catch (IOException ex)
+                {
+                    Console.WriteLine("Exception caught: {0}", ex);
+                }
+            }
+            
+
+            String[] argument = Environment.GetCommandLineArgs();
+            try
+            {
+                if (argument[1] == null)
+                {
+                    // do nothing
+                }
+                else
+                {
+                    textBoxOpen.Text = argument[1];
+                    tabControl.SelectedTab = decrypt;
+                }
+            }
+            catch (Exception e8)
+            {
+                // iolo
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog result = new OpenFileDialog();
+
+            if (result.ShowDialog() == DialogResult.OK)
+            {
+                filetobeopened = result.FileName;
+                textBoxOpen.Text = "";
+                textBoxOpen.Text = filetobeopened;
+               
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //cmd.runCommand("\"C:\\Program Files\\WinRAR\\WinRar.exe\"" + " " + filetobeopened);
+            
+            //string copiedFilesPath = currentDir + "\\temp_zip";
+            string toopen = "C:\\Temp\\Temp.zip";
+            if (File.Exists(toopen))
+            {
+                try
+                {
+                    File.Delete(toopen);
+                }
+                catch (IOException temp_e)
+                {
+                    //ECCCCCCEZZZZIONI ROBBBEEE
+                }
+            }
+
+            try
+            {
+                File.Copy(filetobeopened, toopen);
+            }
+            catch (IOException copy_exception)
+            {
+                // ALTRE ROBBE BRUTTISIME
+            }
+            //cmd.runCommand("copy /Y" + " " + filetobeopened + " " + toopen);
+            //cmd.runCommand("move /Y" + " " + toopen + " " + "C:\\Windows\\Temp\\aaa.zip");
+            cmd.runCommand(winrarPath + " " + toopen);
+
+            MessageBox.Show("Hold on there tiger!\nWait for 9 seconds");
+            Sub_Thread();
+            //System.Threading.Thread.Sleep(9000);
+            cmd.runCommand("rm" + " " + textBoxOpen.Text + ".zip");
+
+            //System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("WinRar");
+            //if (pname.Length == 0)
+            //    MessageBox.Show("Hold on there tiger!");
+            //else
+            //    cmd.runCommand("rm" + " " + textBoxOpen.Text + ".zip");
+
+        }
+
+        private void Sub_Thread()
+        {
+            ThreadStart child = new ThreadStart(CallToChildThread);
+        }
+
+        public static void CallToChildThread()
+        {
+            Thread.Sleep(10000);
+            File.Delete("C:\\Temp\\Temp.zip");
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+            // do nothing
+            //cmd.runCommand("rm" + " " + "C:\\Temp\\Temp.zip");
+            File.Delete("C:\\Temp\\Temp.zip");
+
+        }
+
+        private string doesWinRarExist()
+        {
+            if (File.Exists("C:\\Program Files\\WinRAR\\WinRar.exe")){
+                winrarPath = "\"C:\\Program Files\\WinRAR\\WinRar.exe\"";
+            }
+            else if (File.Exists("C:\\Program Files (x86)\\WinRAR\\WinRar.exe"))
+            {
+                winrarPath = "\"C:\\Program Files (x86)\\WinRAR\\WinRar.exe\"";
+            }
+            else
+            {
+                MessageBox.Show("Seems you havent WinRar installed on your system, you can't use open options without it", "Cant find WinRar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                winrarPath = "";
+                button1.Enabled = false;
+                button3.Enabled = false;
+            }
+            return winrarPath;
+        }
+
+        private void joinFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControl.SelectedTab = encrypt;
+        }
+
+        private void openFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControl.SelectedTab = decrypt;
+        }
+
+        
     }
 }
