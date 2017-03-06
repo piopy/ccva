@@ -288,7 +288,7 @@
             this.groupBox1.Controls.Add(this.pass);
             this.groupBox1.Controls.Add(this.yesEnc);
             this.groupBox1.Controls.Add(this.noEnc);
-            this.groupBox1.Location = new System.Drawing.Point(15, 113);
+            this.groupBox1.Location = new System.Drawing.Point(15, 105);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(443, 81);
             this.groupBox1.TabIndex = 15;
@@ -432,7 +432,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(479, 317);
+            this.panel1.Size = new System.Drawing.Size(479, 301);
             this.panel1.TabIndex = 22;
             // 
             // tabControl
@@ -456,7 +456,7 @@
             this.encrypt.Location = new System.Drawing.Point(4, 4);
             this.encrypt.Name = "encrypt";
             this.encrypt.Padding = new System.Windows.Forms.Padding(3);
-            this.encrypt.Size = new System.Drawing.Size(485, 323);
+            this.encrypt.Size = new System.Drawing.Size(485, 307);
             this.encrypt.TabIndex = 0;
             this.encrypt.Text = "Join files & Encrypt";
             this.encrypt.UseVisualStyleBackColor = true;

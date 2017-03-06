@@ -12,6 +12,7 @@ using System.IO.Compression;
 using MRJoiner.utility;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Net;
 
 namespace MRJoiner
 {
@@ -392,7 +393,28 @@ namespace MRJoiner
 
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/BurningHAM18/ccva/releases");
+            try
+            {
+                byte[] b_version_local = Encoding.UTF8.GetBytes(MRJoiner.Properties.Resources.version);
+                WebClient client = new WebClient();
+               client.DownloadFile("https://raw.githubusercontent.com/BurningHAM18/ccva/master/MRJoiner/version.txt", "wversion.txt");
+
+                byte[] bytes = System.IO.File.ReadAllBytes("wversion.txt");
+
+
+                if (b_version_local[0] == bytes[3]) MessageBox.Show("You have the last version, man");
+                else
+                {
+                    MessageBox.Show("Found new version, go to my GitHub");
+                    System.Diagnostics.Process.Start("https://github.com/BurningHAM18/ccva/releases");
+                }
+                File.Delete("wversion.txt");
+            }
+            catch (Exception e3)
+            {
+                MessageBox.Show("Error, enjoy this version, man");
+            }
+
         }
 
         private void aboutDevelopersToolStripMenuItem_Click(object sender, EventArgs e)
