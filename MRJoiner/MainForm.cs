@@ -402,7 +402,7 @@ namespace MRJoiner
                 byte[] bytes = System.IO.File.ReadAllBytes("wversion.txt");
 
 
-                if (b_version_local[0] == bytes[3]) MessageBox.Show("You have the last version, man");
+                if (b_version_local[0] == bytes[0]) MessageBox.Show("You have the last version, man");
                 else
                 {
                     MessageBox.Show("Found new version, go to my GitHub");
