@@ -62,21 +62,14 @@
             this.encrypt = new System.Windows.Forms.TabPage();
             this.decrypt = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nuovoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.apriToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.salvaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.esciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutDevelopersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.decryptbox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -194,7 +187,7 @@
             this.decryptbox.Controls.Add(this.outfile);
             this.decryptbox.Location = new System.Drawing.Point(14, 86);
             this.decryptbox.Name = "decryptbox";
-            this.decryptbox.Size = new System.Drawing.Size(454, 154);
+            this.decryptbox.Size = new System.Drawing.Size(454, 138);
             this.decryptbox.TabIndex = 14;
             this.decryptbox.TabStop = false;
             this.decryptbox.Text = "Decrypt";
@@ -454,7 +447,7 @@
             this.tabControl.Multiline = true;
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(493, 349);
+            this.tabControl.Size = new System.Drawing.Size(493, 333);
             this.tabControl.TabIndex = 23;
             // 
             // encrypt
@@ -474,7 +467,7 @@
             this.decrypt.Location = new System.Drawing.Point(4, 4);
             this.decrypt.Name = "decrypt";
             this.decrypt.Padding = new System.Windows.Forms.Padding(3);
-            this.decrypt.Size = new System.Drawing.Size(485, 323);
+            this.decrypt.Size = new System.Drawing.Size(485, 307);
             this.decrypt.TabIndex = 1;
             this.decrypt.Text = "Open files & Dectypt";
             this.decrypt.UseVisualStyleBackColor = true;
@@ -490,14 +483,24 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(479, 317);
+            this.panel2.Size = new System.Drawing.Size(479, 301);
             this.panel2.TabIndex = 24;
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Location = new System.Drawing.Point(223, 277);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(254, 13);
+            this.linkLabel2.TabIndex = 22;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Brought you by BurningHam18 and cttynul with love.";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
             this.joinFilesToolStripMenuItem,
             this.openFilesToolStripMenuItem,
             this.aboutToolStripMenuItem});
@@ -506,62 +509,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(492, 24);
             this.menuStrip1.TabIndex = 24;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nuovoToolStripMenuItem,
-            this.apriToolStripMenuItem,
-            this.toolStripSeparator,
-            this.salvaToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.esciToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "&File";
-            // 
-            // nuovoToolStripMenuItem
-            // 
-            this.nuovoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("nuovoToolStripMenuItem.Image")));
-            this.nuovoToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.nuovoToolStripMenuItem.Name = "nuovoToolStripMenuItem";
-            this.nuovoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.nuovoToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.nuovoToolStripMenuItem.Text = "&Nuovo";
-            // 
-            // apriToolStripMenuItem
-            // 
-            this.apriToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("apriToolStripMenuItem.Image")));
-            this.apriToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.apriToolStripMenuItem.Name = "apriToolStripMenuItem";
-            this.apriToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.apriToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.apriToolStripMenuItem.Text = "&Apri";
-            // 
-            // toolStripSeparator
-            // 
-            this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(159, 6);
-            // 
-            // salvaToolStripMenuItem
-            // 
-            this.salvaToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("salvaToolStripMenuItem.Image")));
-            this.salvaToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.salvaToolStripMenuItem.Name = "salvaToolStripMenuItem";
-            this.salvaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.salvaToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.salvaToolStripMenuItem.Text = "&Salva";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(159, 6);
-            // 
-            // esciToolStripMenuItem
-            // 
-            this.esciToolStripMenuItem.Name = "esciToolStripMenuItem";
-            this.esciToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.esciToolStripMenuItem.Text = "&Esci";
             // 
             // joinFilesToolStripMenuItem
             // 
@@ -590,43 +537,35 @@
             // checkForUpdatesToolStripMenuItem
             // 
             this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
-            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.checkForUpdatesToolStripMenuItem.Text = "Check for updates";
+            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
             // 
             // aboutDevelopersToolStripMenuItem
             // 
             this.aboutDevelopersToolStripMenuItem.Name = "aboutDevelopersToolStripMenuItem";
             this.aboutDevelopersToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.aboutDevelopersToolStripMenuItem.Text = "About and License";
-            // 
-            // linkLabel2
-            // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(223, 277);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(254, 13);
-            this.linkLabel2.TabIndex = 22;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Brought you by BurningHam18 and cttynul with love.";
+            this.aboutDevelopersToolStripMenuItem.Click += new System.EventHandler(this.aboutDevelopersToolStripMenuItem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(492, 348);
+            this.ClientSize = new System.Drawing.Size(492, 332);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(508, 387);
-            this.MinimumSize = new System.Drawing.Size(508, 387);
+            this.MaximumSize = new System.Drawing.Size(508, 371);
+            this.MinimumSize = new System.Drawing.Size(508, 371);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ccva";
@@ -685,13 +624,6 @@
         private System.Windows.Forms.TabPage decrypt;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem nuovoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem apriToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-        private System.Windows.Forms.ToolStripMenuItem salvaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem esciToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem joinFilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;

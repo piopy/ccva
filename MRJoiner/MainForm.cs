@@ -390,6 +390,20 @@ namespace MRJoiner
             tabControl.SelectedTab = decrypt;
         }
 
-        
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/BurningHAM18/ccva/releases");
+        }
+
+        private void aboutDevelopersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Made by BurningHAM18 & cttynul\nGNUv3 License");
+            System.Diagnostics.Process.Start("https://raw.githubusercontent.com/BurningHAM18/ccva/master/LICENSE");
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=H_DiH7wnsMo");
+        }
     }
 }
