@@ -40,4 +40,4 @@ Open a crypted file/ a file joined
 - MrRobot for the idea :D (remember, TYRELLIOT!)
 
 
-** Copyright (c) 2016 burningHAM18  **
+Copyright (c) 2016 [burningHAM18](https://github.com/burningHAM18) [cttynul](https://github.com/cttynul)
