@@ -15,6 +15,7 @@ p.s. i am NOT responsible for any damages or data loss. If you will contact me
 
 
 ### INSTALL AND USE IT
+(you may need to disable the antivirus)
 
 - Download the last release from [here](https://github.com/BurningHAM18/ccva/).
 - Unzip and run 
@@ -34,9 +35,7 @@ Open a joined file:
 
 ### THANKS 
 
-
 - My friend [cttynul](https://github.com/cttynul) 
-
 
 ** Copyright (c) 2016, 2017 BurningHAM18, cttynul  **
 
