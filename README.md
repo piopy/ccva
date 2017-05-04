@@ -11,7 +11,7 @@ It allows you to hide more files into another one (.mp3 , .jpg, .pdf tested) wit
 p.s. i am NOT responsible for any damages or data loss. If you will contact me
      saying "i melted my PC" i will only laugh. a lot.
 
-![ccva](http://i.imgur.com/W2fllTU.png)
+![ccva](http://i.imgur.com/lEPyIFJ.png)
 
 
 ### INSTALL AND USE IT
@@ -21,23 +21,28 @@ p.s. i am NOT responsible for any damages or data loss. If you will contact me
 `
 Program/ccva.exe
 `
+Join files into one:
 - Choose the "base" file
 - Choose the files to be hidden/joined
 - Choose Encryption mode (none, AES)
 - Join!
 
-Open a crypted file/ a file joined
-
-- Rename the Joined file from " .* " to " .zip "
-- Extract content
-- Open it or decrypt it using ccva
+Open a joined file:
+- Open it and decrypt it using ccva (WinRar may be requested)
 
 
 ### THANKS 
 
 
-- My friend [cttynul](https://github.com/cttynul) for his time spent with me on encryptor/decryptor
-- MrRobot for the idea :D (remember, TYRELLIOT!)
+- My friend [cttynul](https://github.com/cttynul) 
 
 
-** Copyright (c) 2016 burningHAM18  **
+** Copyright (c) 2016, 2017 BurningHAM18, cttynul  **
+
+
+### MIND REFRESH ABOUT LICENSE:
+
+# PROGRAM IS UNDER GPLv3 >>>> READ IT [HERE](https://github.com/BurningHAM18/hit/blob/master/LICENSE)
+# THE LICENSE CAN'T BE MODIFIED OR DELETED
+# THE COPYRIGHT NOTE CAN'T BE DELETED, AT LEAST YOU CAN ADD YOURSELF TO THE NAMES 
+# YOU CAN' T WRITE "THANKS FOR THE IDEA" IF MORE ALGORITHM OF OURS ARE USED IN YOUR SOFTWARE
