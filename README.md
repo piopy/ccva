@@ -41,7 +41,7 @@ Open a joined file:
 ** Copyright (c) 2016, 2017 BurningHAM18, cttynul  **
 
 
-### MIND REFRESH ABOUT LICENSE:
+### MIND REFRESH ABOUT LICENSE AND COPYRIGHT:
 
 - PROGRAM IS UNDER GPLv3 >>>> READ IT [HERE](https://github.com/BurningHAM18/hit/blob/master/LICENSE)
 - THE LICENSE CAN'T BE MODIFIED OR DELETED
