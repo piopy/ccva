@@ -60,7 +60,7 @@ namespace MRJoiner
                 textBox1.Text=filetoover;
                 currentDir = Path.GetDirectoryName(filetoover);
                 outputS = Path.GetDirectoryName(filetoover)+"\\Joined";
-                outputtext.Text = outputS;
+                outputtext.Text = outputS+"\\"+Path.GetFileName(filetoover);
             }
         }
 
@@ -180,17 +180,51 @@ namespace MRJoiner
                 //join files e cazzo cancella i file temporanei
                 Directory.CreateDirectory(outputS);
                 cmd.runCommand("copy /b \"" + filetoover + "\"+" + "\"" + zipfile + "\" \"" + outputS + "\\" + Path.GetFileName(filetoover) + "\"");
-                cmd.runCommand("rm" + " " + zipfile);
-                cmd.runCommand("rmdir /s /q" + " " + copiedFilesPath);
+                //cmd.runCommand("rm" + " " + zipfile);
+                //Thread.Sleep(5000);
+                //cmd.runCommand("rmdir /s /q" + " " + copiedFilesPath);
+                string finalfile = outputS + "\\" + Path.GetFileName(filetoover);
+                long finalsize = 0;
+                while (!File.Exists(finalfile) ){
+                    //do nothing
+                    Thread.Sleep(1000);
+                }
+                while((new FileInfo(finalfile).Length) > finalsize)
+                {
 
+                    finalsize = (new FileInfo(finalfile).Length);
+                    Thread.Sleep(1000);
+                }
+                childDestroyer(zipfile, copiedFilesPath);
                 MessageBox.Show("File(s) joined!");
-
-                
-
-                //try { File.Delete(zipfile); } catch (Exception e3) { }
-                //try { Directory.Delete(currentDir + "\\temp_zip", true); } catch (Exception ex) { }
+                finalsize = 0;
             }
             else MessageBox.Show("Something is missed!");
+        }
+
+        
+
+        public static void childDestroyer(string zipfile, string copiedFilesPath)
+        {
+
+            try
+            {
+                File.Delete(zipfile);
+            }
+
+            catch (Exception e3)
+            {
+                Console.WriteLine("Exception caught: {0}", e3);
+            }
+            try
+            {
+                Directory.Delete(copiedFilesPath, true);
+            }
+
+            catch (Exception e3)
+            {
+                Console.WriteLine("Exception caught: {0}", e3);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -223,12 +257,26 @@ namespace MRJoiner
                 passD = passDEC.Text;
                 foreach (string s in outpD)
                 {
-                    try { control = AEScryptdecryptutil.DecryptFile(s, passD); }
+                    try {
+                        control = AEScryptdecryptutil.DecryptFile(s, passD);
+                    }
                     catch (UnauthorizedAccessException e1)
                     {
                         control = false;
                         MessageBox.Show("Incorrect password");
-                        if (Directory.Exists(Path.GetDirectoryName(s) + "\\Decrypted")) Directory.Delete(Path.GetDirectoryName(s) + "\\Decrypted", true);
+                        if (Directory.Exists(Path.GetDirectoryName(s) + "\\Decrypted"))
+                        {
+                            try
+                            {
+                                Directory.Delete(Path.GetDirectoryName(s) + "\\Decrypted", false);
+                            }
+
+                            catch (Exception e3)
+                            {
+                                Console.WriteLine("Exception caught: {0}", e3);
+                            }
+                        }
+                            
                     }
                     if (control == false) break;
                 }
@@ -265,19 +313,44 @@ namespace MRJoiner
                     Console.WriteLine("Exception caught: {0}", ex);
                 }
             }
-            
+
 
             String[] argument = Environment.GetCommandLineArgs();
             try
             {
+
                 if (argument[1] == null)
                 {
                     // do nothing
                 }
+                else if(argument.Length==2)
+                {
+                    passDEC.Enabled = true;
+                    textBox6.Text = "";
+                    filetobeopened = argument[1];
+                    textBoxOpen.Text = argument[1];
+                    outpD = new string[1];
+                    outpD[0] = argument[1];
+                    textBox6.Text += "\"" + Path.GetFileName(argument[1]) + "\" ";
+                    tabControl.SelectedTab = decrypt;
+
+                    outfile.Text = Path.GetDirectoryName(outpD[0]) + "\\Decrypted";
+                }
                 else
                 {
-                    textBoxOpen.Text = argument[1];
+                    passDEC.Enabled = true;
+                    textBox6.Text = "";
+                    
+                    int numerofiles = argument.Length-1;
+                    outpD = new string[numerofiles];
+                    for(int i=1; i<=numerofiles; i++)
+                    {
+                        outpD[i - 1] = argument[i];
+                        textBox6.Text += "\"" + Path.GetFileName(outpD[i-1]) + "\" ";
+                    }
                     tabControl.SelectedTab = decrypt;
+                    
+                    outfile.Text =  Path.GetDirectoryName(outpD[0]) + "\\Decrypted";
                 }
             }
             catch (Exception e8)
@@ -329,8 +402,12 @@ namespace MRJoiner
             //cmd.runCommand("move /Y" + " " + toopen + " " + "C:\\Windows\\Temp\\aaa.zip");
             cmd.runCommand(winrarPath + " " + toopen);
 
-            MessageBox.Show("Hold on there tiger!\nWait for 9 seconds");
-            Sub_Thread();
+            //surplus semi-inutile
+            //MessageBox.Show("Hold on there tiger!\nWait for 9 seconds");
+
+            //questo era per pulire temp ma non ha senso se il file lo apriamo e basta 
+            //Sub_Thread();
+            
             //System.Threading.Thread.Sleep(9000);
             cmd.runCommand("rm" + " " + textBoxOpen.Text + ".zip");
 

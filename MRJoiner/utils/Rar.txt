@@ -1,0 +1,3094 @@
+	
+                            Manuale d'utente
+                            ~~~~~~~~~~~~~~~~
+
+                   RAR versione 5.50 in modalità carattere
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+              =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=
+                Benvenuti nel programma di compressione RAR!
+              =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=
+
+ Introduzione
+ ~~~~~~~~~~~~
+                                                                          
+  RAR è una applicazione in modalità carattere che vi permette di gestire e
+  controllare file di tipo "archivio" dalla linea di comando. RAR mette a 
+  disposizioni funzioni di compressione, cifratura, recupero dati e 
+  molte altre, così come descritto in questo manuale.
+
+  RAR  supporta solo gli archivi in formato RAR, che per definizione hanno
+  l'estensione del file ".rar". Il formato ZIP così come altri formati non
+  sono supportati. Anche se specificate l'estensione .zip quando create un 
+  archivio, questo avrà un formato RAR.
+  Gli utenti di Windows possono installare la versione in modalità grafica,
+  chiamata WinRAR, che può gestire molti altri formati d'archiviazione, tra
+  cui anche RAR e ZIP.
+
+  Anche se la versione in modalità carattere RAR e quella grafica WinRAR 
+  hanno una sintassi da linea di comando simile, esistono comunque alcune 
+  differenze. Per questo motivo si raccomanda la consultazione di questo 
+  manuale RAR.TXT per la versione in modalità carattere RAR (rar.exe nella 
+  versione per Windows) e della guida WinRAR.chm per la versione grafica 
+  WinRAR (WinRAR.exe).
+
+
+ File di configurazione
+ ~~~~~~~~~~~~~~~~~~~~~~
+
+  RAR e UnRAR per Unix possono leggere le informazioni di configurazione 
+  dal file '.rarrc' posto una directory principale dell'utente 
+  (memorizzata nella variabile d'ambiente HOME) o nella directory '/etc'.
+
+  RAR e UnRAR per Windows possono leggere le informazioni di 
+  configurazione dal file 'RAR.INI' posto nella stessa cartella del file 
+  'RAR.EXE'.
+
+  Questi file possono contenere le seguenti istruzioni:
+
+     switches=<qualsiasi_opzione_di_RAR_separata_da_uno_spazio>
+
+  Ad esempio:
+
+  switches=-m5 -s
+
+  E' inoltre possibile specificare raggruppamenti di opzioni da utilizzare 
+  per i singoli comandi di RAR utilizzando la seguente sintassi:
+
+  switches_<comando>=<qualsiasi_opzione_di_RAR_separata_da_uno_spazio>
+
+  Ad esempio:
+
+  switches_a=-m5 -s
+  switches_x=-o+
+
+
+ Variabile d'ambiente
+ ~~~~~~~~~~~~~~~~~~~~
+
+    Le opzioni predefinite possono essere aggiunte automaticamente alla
+    linea di comando di RAR memorizzandole in una variabile d'ambiente
+    "RAR".
+
+    Per esempio, in Unix possono essere aggiunte al tuo profilo le seguenti
+    linee:
+
+      RAR='-s -md1024'
+      export RAR
+
+    RAR userà queste opzioni come parametri predefiniti nella linea di
+    comando e creerà archivi "solidi" con una dimensione dizionario di
+    1024Kbytes.
+
+    In Windows, la stessa funzione viene svolta dall'istruzione seguente,
+    che va aggiunta la file AUTOEXEC.BAT:
+
+      SET RAR=-s -md1024
+
+    RAR gestisce la definizione delle opzioni secondo la seguente
+    proprietà:
+
+       opzioni da linea di comando             priorità maggiore
+       opzioni nella variabile d'ambiente      priorità inferiore
+       opzioni nel file di configurazione      priorità più bassa
+
+
+ File di tracciato
+ ~~~~~~~~~~~~~~~~~
+
+  Se l'opzione '-ilog' viene specificata nella linea di comando o nel file 
+  di configurazione, RAR scriverà i messaggi riguardanti errori incontrati 
+  durante i processi di archiviazione in un file di tracciato. 
+  Leggi la descrizione del parametro -ilog per ottenere ulteriori dettagli.
+
+
+ Il file con l'ordine di archiviazione per il formato 'solido': rarfiles.lst
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Il file “rarfiles.lst” contiene un elenco definibile dall'utente che
+  indica a RAR l'ordine con cui aggiungere i file ad un archivio 'solido'.
+  Esso può contenere nomi, filtri con caratteri jolly e una istruzione
+  speciale: $default. Questa istruzione definisce il posto in cui collocare
+  tutti i file che non rispondo ai criteri stabiliti dalle altre
+  definizioni inserite nel file in oggetto. Il carattere da anteporre ad
+  una linea di commento, non considerata da RAR, è “;”.
+
+  In Windows questo file deve essere posto nella stessa cartella di 
+  RAR.EXE o nella cartella %APPDATA%\WinRAR ; in Unix nella cartella 
+  principale dell'utente (HOME) o in /etc.
+
+  Due consigli per ottenere un aumento della compressione e della velocità 
+  d'operazione:
+
+  - file simili dovrebbero essere raggruppati vicini nell'archivio;
+  - file con frequente accesso dovrebbero essere posti all'inizio 
+    dell'archivio.
+
+  Normalmente le definizioni dei filtri posti all'inizio dell'elenco hanno 
+  una priorità più alta rispetto a quelli seguenti, ma c'è un'eccezione a 
+  questa regola. Se il file 'rarfiles.lst' contiene due filtri per i quali 
+  tutti i file ricadono sia nel primo filtro che nel secondo, il secondo 
+  ha la priorità maggiore se il suo filtro è più selettivo. Ad esempio, nel
+  caso di due filtri '*.cpp' e 'f*.cpp', il secondo, 'f*.cpp' è prioritario
+  rispetto al primo in quanto la sua definizione è più specifica rispetto
+  al precedente.
+
+
+ Sintassi dei comandi di RAR 
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ Sintassi
+
+    RAR <comando> -<opzione_1> -<opzione_N> <archivio> <file...>
+        <@lista_file...> <percorso_dove_estrarre\>
+
+
+ Descrizione
+
+    I comandi e le opzioni da linea di comando permettono il controllo 
+    della creazione e della gestione di archivi con RAR. Il comando è una 
+    istruzione, di solito una sola lettera, che attiva la relativa azione.
+    Le opzioni sono state introdotte per modificare il modo con cui RAR 
+    esegue l'azione. Gli altri parametri sono il nome dell'archivio e i 
+    file da archiviare o da estrarre dall'archivio.
+
+    I file <lista_file> sono file di testo puro e contengono l'elenco 
+    dei nomi dei file da processare. Il nome del file deve iniziare a 
+    colonna 1. È possibile inserire dei commenti nel file_di_lista dopo la 
+    coppia dei caratteri //. Per esempio, potete creare un file Copia.Lst 
+    che contiene il seguente testo:
+
+    c:\lavori\documenti\*.txt         //copia dei documenti di testo
+    c:\lavori\immagini\*.bmp          //copia delle immagini
+    c:\lavori\vari
+
+    e quindi eseguire il comando:
+
+       rar a copia @copia.lst
+
+    Se volete che i nomi dei file siano inseriti da tastiera lasciate 
+    vuoto il nome del file_di_lista, quindi lasciate solo @.
+
+    Per definizione, RAR in modalità carattere per Windows utilizza la
+    codifica dei caratteri ad un solo byte per l'elenco dei file, ma questo
+    comportamento può essere modificato con l'opzione -sc<set_caratteri>.
+
+    Dalla linea di comando potete specificare sia direttamente dei nomi di 
+    file sia un file_di_lista. Se non vengono specificati almeno uno dei 
+    due, RAR processerà tutti i file presenti.
+
+    Molti comandi di RAR, come quelli per l'estrazione, la verifica o 
+    l'elencazione, permettono l'impiego dei caratteri jolly nel nome 
+    dell'archivio. Se nel nome dell'archivio non viene specificata alcuna 
+    estensione, RAR assume solo l'estensione .rar; per questo inserire il 
+    solo carattere '*' significa selezionare solo tutti gli archivi con 
+    estensione .rar. Se dovete gestire degli archivi senza estensione
+    inserite '*.' . La maschera '*.*' seleziona tutti i file. I caratteri
+    jolly nel nome dell'archivio non sono permessi per i comandi di
+    archiviazione o eliminazione.
+
+    In ambiente Unix dovete racchiudere i parametri della linea di comando 
+    che contengono i caratteri jolly tra singoli o doppi apici per evitare 
+    che siano interpretati dalla shell di Unix. Per esempio il comando 
+    seguente estrae tutti i file *.asm da tutti gli archivi *.rar nel 
+    percorso corrente:
+
+       rar e '*.rar' '*.asm'
+
+
+    Il comando può essere uno dei seguenti:
+
+    a       Aggiunge all'archivio file e cartelle.
+
+            Esempi:
+
+            1) Aggiungi tutti i file *.hlp dalla cartella corrente 
+               all'archivio guida.rar:
+                
+                  rar a guida *.hlp
+
+            2) Archivia tutti i file della cartella corrente e di tutte le 
+               sotto-cartelle in un archivio auto-estraente, solido,
+               multi-volume dalla dimensione massima del volume di 362.000 
+               byte ed aggiungi ad ogni volume i dati per il recupero 
+               degli errori:
+ 
+                  rar a -r -v362 -s -sfx -rr salvataggio
+
+               Siccome non viene specificato alcun file da archiviare, 
+               viene assunto il filtro *.* (tutti i file).
+
+            3) Come eccezione speciale, se viene specificato come 
+               parametro dei file da archiviare il nome di una cartella e se 
+               questo parametro non include ne un filtro che identifica dei 
+               file ne un carattere '\' finale, verrà aggiunto 
+               all'archivio l'intero contenuto della cartella e di tutte 
+               le sotto-cartelle, anche se non viene inserita l'opzione 
+               -r.
+
+               Il seguente comando aggiungerà tutti i file presenti nella 
+               cartella Immagini e tutte le sotto-cartelle contenute in un 
+               archivio dal nome copia_Immagini:
+            
+                  rar a copia_Immagini.rar Immagini
+
+            4) Se il nome della cartella include un carattere '\' finale o 
+               un filtro per identificare dei file, verranno utilizzate le 
+               normali regole e dovrete specificare l'opzione -r se volete 
+               includere nel processo le sotto-cartelle.
+
+               Il seguente comando aggiungerà tutti i file presenti nella 
+               cartella Immagini ma non quelli presenti nelle 
+               sotto-cartelle perché non è stata specificata l'opzione -r:
+            
+                  rar a copia_Immagini.rar Immagini\*
+
+
+    c       Aggiunge un commento all'archivio. Il commento viene
+            visualizzato all'inizio di una operazione sull'archivio. La
+            dimensione di un commento può essere al massimo di 256 KByte.
+
+            Esempi:
+
+               rar c distribuzione.rar
+
+            Inoltre un commento può essere preso da un file di testo 
+            utilizzando l'opzione -z[<nome_file>].
+            Il comando seguente aggiunge all'archivio un commento contenuto 
+            nel file info.txt:
+
+               rar c -zinfo.txt distribuzione
+
+
+    ch      Modifica alcune caratteristiche dell'archivio.
+
+            Questo comando è utile per applicare molte opzioni che 
+            modificano le caratteristiche di un archivio ma che non hanno 
+            un loro comando, come le opzioni -cl, -cu, -tl.
+
+            Con questo comando non si può ricomprimere, cifrare o decifrare
+            i dati di un archivio e non si possono unire o creare dei
+            volumi.
+
+            Se utilizzato senza alcuna opzione, il comando 'ch' copia 
+            semplicemente i dati dell'archivio senza apportare alcuna 
+            modifica.
+
+            Esempio:
+
+              rar ch -tl archivio.rar
+
+            imposta l'orario dell'archivio come quello del file archiviato 
+            più recente.
+
+
+    cw      Scrive il commento di un archivio in uno specifico file.
+
+            Il formato del file creato dipende dal valore del parametro -sc.
+
+            Se il nome del file in cui scrivere i commenti non viene 
+            specificato, i commenti verranno inviati al dispositivo 
+            stdout.
+
+            Esempi:
+
+            1) rar cw archivio commento.txt
+
+            2) rar cw -scuc archivio commento_unicode.txt
+
+            3) rar cw archivio
+
+
+    d       Cancella file e cartelle da un archivio. Notate che se dopo la
+            cancellazione l'archivio non ha più file al suo interno,
+            anch'esso viene cancellato.
+
+
+    e       Estrae tutti i file dell'archivio nella cartella corrente,
+            annullando eventuali percorsi memorizzati.
+
+            Con questo comando tutti i file vengono estratti nella stessa 
+            cartella.
+            Utilizza il comando 'x' se vuoi estrarre i file con il 
+            percorso completo così come memorizzato nell'archivio.
+
+            Esempio:
+
+               rar e -or html.rar *.css css\
+
+            estrae tutti i file *.css dall'archivio html.rar nella 
+            cartella 'css' escludendo i percorsi archiviati. Nel caso ci 
+            siano più file con lo stesso nome avviene una rinomina in 
+            automatico.
+
+
+    f       Aggiorna i file presenti nell'archivio solo se sono più
+            vecchi di quelli presenti nella cartella di origine. Questo
+            comando non aggiunge nuovi file all'archivio.
+
+
+    i[i|c|h|t]=<frase>
+            Trova una frase negli archivi.
+
+            Potete specificare i seguenti parametri:
+
+              i - ricerca non sensibile al maiuscolo/minuscolo 
+                  (predefinito);
+
+              c - ricerca sensibile al maiuscolo/minuscolo;
+
+              h - ricerca esadecimale;
+
+              t - utilizza la tabella dei caratteri ANSI, Unicode e OEM 
+                  (solo per Windows).
+
+            Se non deve essere specificato alcun parametro, è possibile 
+            utilizzare una sintassi del comando semplificata, ovvero 
+            i<frase>  invece di i=<frase>.
+
+            È possibile specificare il parametro 't' in concomitanza con 
+            altri parametri, come ad esempio, ict=<frase> che esegue una 
+            ricerca sensibile al maiuscolo/minuscolo e con le tabelle dei 
+            caratteri sopra riportate.
+
+            Esempi:
+
+            1) rar "ic=primo livello" -r c:\*.rar *.txt
+
+               Esegue una ricerca, sensibile al maiuscolo/minuscolo, della
+               frase "primo livello" nei file .txt compresi in tutti gli
+               archivi .rar del disco C:.
+
+            2) rar ih=f0e0aeaeab2d83e3a9 -r e:\testi\*.rar
+
+               Esegue la ricerca della sequenza esadecimale 
+               'F0 E0 AE AE AB 2D 83 E3 A9' negli archivi rar della 
+               cartella 'e:\testi'.
+
+
+    k       Blocca l'archivio. Ogni operazione di modifica eseguita su un
+            archivio bloccato verrà ignorata.
+
+            Esempio:
+
+               rar k finale.rar
+
+
+    l[t[a],b]  
+            Elenca il contenuto di un archivio:
+               [t-livello tecnico[a-tutti],b-semplice]. 
+
+            'l' visualizza gli attributi dei file archiviati, le 
+            dimensioni, la data, l'orario ed il nome, un file per linea. 
+            Se il file è cifrato alla linea viene anteposto il 
+            carattere '*'.
+
+            'lt' visualizza le informazioni dettagliate per ogni file su
+            più linee, come il valore di checksum il Sistema Operativo dove
+            si è creato l'archivio, le opzioni di compressione ed altri
+            parametri.
+
+            'lta' fornisce le informazioni dettagliate non solo per i file 
+             ma anche per le intestazioni ausiliarie, come i flussi NTFS 
+             o i dati sulla sicurezza dei file.
+
+             'lb' elenca semplicemente i nomi dei file con il percorso, 
+             uno per linea, senza informazioni addizionali.
+
+             Potete utilizzare l'opzione -v per elencare i contenuti di 
+             tutti i volumi facenti parte lo stesso insieme: 
+                rar l -v volume.part1.rar
+
+             I comandi 'lt', 'lta' e 'lb' corrispondono alle opzioni 'vt', 
+             'vta' e 'vb',
+
+
+    m[f]    Muove file e cartelle nell'archivio [solo file]. A seguito
+            di una archiviazione terminata con successo, i file e le
+            cartelle originali vengono cancellate. Le cartelle non
+            verranno rimosse se viene aggiunto il carattere 'f' e/o se
+            viene inserito nella linea di comando l'opzione '-ed'.
+
+
+    p       Stampa il file verso il dispositivo di output, solitamente
+            PRN, la stampante.
+
+            Potete utilizzare questo comando in congiunzione al parametro 
+            -inul per disabilitare tutti i messaggi di RAR e stampare solo 
+            i dati del file. Questo può essere importante se avete bisogno 
+            d'inviare il contenuto di un file al dispositivo 'stdout' 
+            utilizzato per le 'pipes'.
+
+
+    r       Ripara l'archivio se danneggiato. La riparazione di un 
+            archivio viene eseguita in due stadi. Per primo l'archivio
+            danneggiato viene scansionato per individuare la presenza di
+            eventuali dati per il recupero (vedi anche il comando 'rr'). Se
+            l'archivio contiene delle informazioni per il recupero inserite
+            in precedenza e se la porzione dei dati danneggiati è contigua
+            e minore della dimensione dei dati per il recupero inseriti
+            nell'archivio, la possibilità di ricostruire integralmente
+            l'archivio è molto alta. Quando questo stadio ha termine viene
+            creato un nuovo archivio, chiamato "fixed.<nome_archivio>.rar",
+            dove "<nome_archivio>" è il nome dell'archivio originale
+            danneggiato.
+
+            Se un archivio danneggiato non contiene informazioni per il
+            recupero o l'archivio non può essere completamente riparato per
+            la serietà del danno, viene attivato un secondo stadio. Durante
+            questo stadio viene ricostruita solo la struttura dell'archivio
+            mentre è impossibile recuperare i file per i quali fallisce il
+            controllo dell'integrità (CRC). È comunque possibile ricuperare
+            i file non danneggiati che risultano normalmente inaccessibili
+            per il danneggiamento della struttura. Generalmente questo è
+            utile per archivi non solidi. Se un archivio solido viene
+            danneggiato, spesso durante il secondo stadio possono essere
+            recuperati solo i file precedenti quello danneggiato. Questa
+            fase non è utile per gli archivi che hanno l'intestazione dei
+            file cifrata: posso essere riparati solo se sono state
+            inserite le informazioni per il recupero.
+
+            Quando questo stadio ha termine, viene creato un nuovo 
+            archivio chiamato "rebuild.<nome_archivio>.rar", dove 
+            "<nome_archivio>" è sempre il nome dell'archivio originale 
+            danneggiato.
+
+            Per definizione gli archivi contenenti i dati recuperati 
+            vengono creati nella cartella corrente, ma potete appendere un 
+            percorso di destinazione opzionale.
+
+            Esempio:
+
+               rar r rovinato.rar c:\riparati\
+
+            Ripara il file rovinato.rar e mette gli archivi risultanti 
+            nella cartella c:\riparati .
+
+
+    rc      Ricostruisce gli eventuali volumi mancanti o quelli 
+            danneggiati utilizzando i volumi di ripristino (file .rev).
+            Dovete specificare uno qualsiasi dei volumi esistenti; ad
+            esempio: 'rar rc copia.part03.rar'.
+
+            Leggete la descrizione del comando 'rv' per ottenere 
+            informazioni complete in merito ai volumi di ripristino.
+
+
+    rn      Rinomina i file archiviati.
+
+            La sintassi del comando è:
+
+               rar rn <nome_archivio> <vecchio_nome1> <nuovo_nome1> ...  <vecchio_nomeN> <nuovo_nomeN>
+
+            Ad esempio, il comando seguente:
+
+               rar rn dati.rar leggimi.txt leggimi.bak info.txt info.bak
+
+            rinominerà, nell'archivio dati.rar, il file leggimi.txt in 
+            leggimi.bak ed il file info.txt in info.bak.
+
+            È possibile utilizzare i caratteri jolly nella definizione di 
+            "vecchio_nome" e di "nuovo_nome" per trasformazioni come il 
+            cambio di tutto un tipo d'estensione dei file. Ad esempio:
+
+               rar rn dati.rar *.txt *.bak
+
+            rinominerà tutti i file con estensione .txt in .bak.
+
+            RAR non verifica se il nome del file nuovo è già presente 
+            nell'archivio e per questo è importante porre attenzione per 
+            evitare nomi duplicati, soprattutto quando si utilizzano i 
+            caratteri jolly. Questo comando è potenzialmente pericoloso 
+            perché inserendo dei caratteri jolly errati si può ottenere 
+            la perdita dell'intero archivio.
+
+
+    rr[N]   Aggiunge all'archivio i dati utili per un recupero.
+            Opzionalmente, possono essere aggiunte ad un archivio delle
+            informazioni per il recupero che comportano un piccolo aumento
+            delle dimensioni dell'archivio, ma che possono essere d'aiuto
+            per il recupero dei file nel caso di un difetto al supporto su 
+            cui vengono memorizzati (dischetto, memoria USB, disco rigido, 
+            disco allo stato solido, ecc.) o di altri danneggiamenti ai
+            dati trasferiti da un sistema ad un altro, sempre che il danno
+            non sia troppo grave.
+            Questo recupero dei dati danneggiati può essere eseguito 
+            utilizzando il comando "r" (ripara).
+
+            I formati di archiviazione RAR 4.x e 5.0 utilizzano una 
+            struttura delle informazioni per il recupero e un algoritmo 
+            differenti tra loro.
+
+            Le informazioni per il recupero utilizzate da RAR 4.x si 
+            basano sull'algoritmo XOR.
+            Potete specificare la dimensione delle informazioni 4.x o come 
+            numero dei settori di recupero o come percentuale rispetto 
+            alla dimensione dell'archivio. Per specificare il numero dei 
+            settori basta aggiungerli direttamente dopo il comando 'rr', 
+            come ad esempio 'rr1000' per aggiungerne 1.000.
+            Per indicare una percentuale rispetto alla dimensione 
+            dell'archivio aggiungete i caratteri 'p' o '%' dopo la cifra 
+            della percentuale, come 'rr5p' o 'rr5%' per indicare un 5 per 
+            cento.
+            Da notare che se inserite questo comando in un file .bat o 
+            .cmd, dovete utilizzare la sintassi 'rr3%%' invece di 'rr3%' 
+            in quanto l'interprete dei comandi DOS considera il singolo '%' 
+            come inizio di un parametro passato alla chiamata del file 
+            batch. In questi casi è quindi preferibile utilizzare 'p' al 
+            posto di '%'.
+
+            I settori per il recupero dati di RAR 4.x hanno una dimensione 
+            di 512 byte.
+            Se i dati danneggiati sono contigui, ogni settore può
+            recuperare sino 512 byte di informazioni, altrimenti questo
+            valore può diminuire in presenza di più punti di
+            danneggiamento.
+            La dimensione dei dati per il recupero può essere calcolata in
+            modo approssimativo tramite la seguente formula:
+    
+             <dimensione_archivio> / 256 + <numero_settori_dati_di_recupero>
+              * 512 byte.
+
+            Il processo di recupero dati di RAR 5.0 utilizza la correzione 
+            d'errore Reed-Solomon.
+            La sua abilità di riparare danni contigui è all'incirca come 
+            quella di RAR 4.x, permettendo di ripristinare una quantità di 
+            dati leggermente inferiore rispetto alla dimensione delle 
+            informazioni per il recupero. Ma è significativamente più 
+            efficiente rispetto a RAR 4.x in caso di un danneggiamento a 
+            più aree.
+
+            Le informazioni per il recupero di RAR 5.0 non utilizzano 
+            settori di 512 byte; per questo motivo potete indicare la 
+            dimensione solo come percentuale della dimensione 
+            dell'archivio. Quindi, anche non sono indicati i caratteri '%' 
+            o 'p', RAR considera il valore come una percentuale, nel caso 
+            del formato RAR 5.0: per questo sia 'rr5' che 'rr5p' indicano 
+            una percentuale del 5%.
+            A causa dei dati aggiuntivi di servizio, la dimensione reale 
+            delle informazioni di recupero sia avvicina in modo 
+            approssimato alla percentuale definita dall'utente e la 
+            differenza è maggiore per archivi di piccole dimensioni.
+
+            La dimensione delle informazioni di recupero per il formato 
+            RAR 5.0 non può superare quella dell'archivio da proteggere e 
+            per questo non potete indicare un valore superiore a 100.
+            In ogni caso ampie dimensioni delle informazioni di recupero 
+            sono processate più lentamente sia nella creazione che 
+            nell'operazione di riparazione dell'archivio.
+
+            Le informazioni per il recupero di RAR 5.0 sono più resistenti 
+            in caso di danneggiamento dei dati di recupero stessi e 
+            possono essere utilizzate delle informazioni parzialmente 
+            danneggiate.
+            Notate che il comando 'R' ripara solo i dati danneggiati, non 
+            i danneggiamenti alle informazioni per il recupero.
+            Dopo aver riparato un archivio danneggiato dovete ricreare 
+            delle nuove informazioni per il recupero per l'archivio appena 
+            creato.
+
+            Entrambi gli algoritmi RAR 4.x e 5.0 sono più efficienti se la 
+            posizione dei dati in un archivio danneggiato non viene 
+            spostata. Se copiate un archivio da un dispositivo danneggiato 
+            (es. CD) utilizzando degli apposti programmi e avete la 
+            possibilità di scegliere se sostituire alla zona danneggiata 
+            degli 0 (zero) invece di rimuoverla, è preferibile sostituire 
+            la zona danneggiata con degli 0 o con altri caratteri in modo 
+            da preservare le posizioni originali dei dati.
+            In ogni caso, anche se non è la modalità ottimale, entrambe le 
+            versioni tentano di eseguire una riparazione dei dati 
+            danneggiati pur se questi vengono spostati.
+            RAR 5.0 gestisce meglio la riparazione in caso di spostamento 
+            dei dati rispetto all'originale rispetto alla versione 4.x.
+
+            Se utilizzate il comando 'rr' senza alcun parametro, RAR 
+            imposterà per definizione una dimensione delle informazioni di 
+            recupero pari al 3% della dimensione dell'archivio.
+
+            Esempio:
+
+               rar rr5p nomearchivio
+
+            aggiunge le informazioni per il recupero dei dati per una 
+            dimensione pari al 5% di quella dell'archivio.
+
+
+    rv[N]   Crea i volumi di ripristino (file .rev), che possono essere 
+            utilizzati per ricostruire uno o più volumi mancanti o 
+            danneggiati di un archivio multi-volume.
+            Questo comando ha senso solo per archivi multi-volume e dovete 
+            specificare il nome del primo volume. Ad esempio:
+
+               rar rv3 dati.part01.rar
+
+            Questa prestazione può essere utile per copie di sicurezza o, 
+            ad esempio, quando postate un archivio multi-volume in un 
+            news-group e qualcuno degli utenti non ha ricevuto alcuni 
+            file. Postando solamente il volume di ripristino invece di 
+            tutti i file mancanti ai vari utenti, si può ridurre il 
+            numero dei file da rispedire.
+
+            Un file .rev permette di ricostruire un volume RAR mancante o
+            danneggiato, uno qualsiasi di quelli che compongono l'archivio
+            multi-volume. Ad esempio, se avete un archivio multi-volume
+            composto da 30 volumi e 3 volumi di ripristino, potete
+            ricostruire sino a 3 volumi presi tra qualsiasi dei 30
+            originali. Se il numero dei file .rev è inferiore al numero
+            dei volumi da ricostruire, la ricostruzione è impossibile. Il
+            numero totale dei volumi normali e di quelli di ripristino non
+            può superare i 255 per il formato RAR 4.x e 65.535 per il 
+            formato RAR 5.0.
+
+            I volumi originali RAR non devono essere modificati dopo la 
+            creazione dei volumi di ripristino. L'algoritmo di ripristino 
+            utilizza i dati memorizzati sia nei volumi di ripristino che 
+            in quelli RAR per ricostruire i volumi RAR mancanti.
+            Quindi se modificate un volume RAR, ad esempio bloccandolo dopo 
+            aver creato dei file .REV, l'operazione di ripristino 
+            fallisce.
+
+            Oltre ai dati per la riparazione, i volumi di ripristino nel 
+            formato RAR 5.0 memorizzano anche informazioni addizionali 
+            come il checksum dei file archiviati. Per questo motivo questi 
+            volumi sono leggermente più grandi dei volumi che devono 
+            proteggere. Se avete in progetto di copiare oltre ai volumi 
+            RAR anche i volumi REV su dei dispositivi rimovibili, dovete 
+            specificare una dimensione dei volumi RAR di qualche kilobyte 
+            più piccola rispetto a quella del dispositivo destinatario.
+
+            Il parametro opzionale <N> permette di specificare il numero 
+            dei volumi di ripristino da creare e deve essere inferiore al 
+            numero totale dei volumi dell'archivio multi-volume. Potete 
+            inoltre posporre il simbolo di percentuale o una 'p' a questo 
+            parametro: in questo caso il numero dei file .rev creati sarà 
+            uguale alla percentuale indicata rispetto al numero totali dei 
+            volumi. Ad esempio:
+            
+               rar rv15% dati.part01.rar
+
+            RAR ricostruisce i volumi mancanti, o danneggiati, o quando si
+            utilizza il comando 'rc' o automaticamente quando non trova il
+            volume seguente durante l'estrazione e trova invece il numero
+            necessario di file .rev.
+
+            I volumi di ripristino non possono essere utilizzati per 
+            correggere dei volumi danneggiati, ma se volete potete 
+            cancellare un volume danneggiato ed eseguire il comando 'rc' 
+            per ricostruirlo.
+
+            Le copie originali dei volumi danneggiati vengono rinominate 
+            in *.bad prima d'essere ricostruite. Ad esempio il file 
+            '<nome_volume>.part03.rar' verrà rinominato in 
+            '<nome_volume>.part03.rar.bad'.
+    
+    
+    s[nome] Converte l'archivio in auto-estraente. Questo comando crea, da
+            un archivio già esistente, uno di tipo auto-estraente
+            (SFX=SelF-eXtracting archive) che, quando viene eseguito, è in
+            grado d'estrarre autonomamente i file contenuti al suo
+            interno. All'archivio viene anteposto un modulo auto-estraente,
+            solitamente il file DEFAULT.SFX, o un altro se viene
+            specificato al posto di [nome]. Nella versione per Windows il
+            file .SFX deve essere nella stessa cartella di RAR.EXE, mentre
+            nella versione per Unix questo deve essere nella directory 
+            dell'utente, in '/usr/lib' o in '/usr/local/lib'.
+
+
+    s-      Rimuove il modulo auto-estraente da un archivio già
+            auto-estraente. RAR creerà un nuovo archivio senza il modulo
+            auto-estraente: l'archivio originale non viene cancellato.
+
+
+    t       Verifica i file archiviati. Questo comando esegue una
+            estrazione fittizia, senza riportare alcun messaggio a video,
+            in modo da verificare i file specificati.
+
+            Esempi:
+
+            Verifica tutti gli archivi della cartella corrente:
+
+               rar t *
+
+            o per Unix:
+
+               rar t '*'
+
+            L'utente può verificare tutti gli archivi delle sotto-cartelle 
+            partendo dalla corrente con il comando:
+
+               rar t -r *
+
+            o per Unix:
+
+               rar t -r '*'
+
+
+    u       Aggiorna i file presenti nell'archivio solo se sono più vecchi
+            di quelli che stanno per essere aggiunti e aggiunge anche i
+            nuovi file, non presenti nell'archivio.
+
+
+    v[t[a],b]  
+            Elenca il contenuto di un archivio in modalità estesa:
+               [t-livello tecnico[a-tutti],b-semplice]. 
+
+            'v' visualizza gli attributi dei file archiviati, le
+            dimensioni, la data, l'orario, il checksum ed il nome, un file
+            per linea. Se il file è cifrato alla linea viene
+            anteposto il carattere '*'.
+            Per il checksum di tipo BLAKE2sp vengono visualizzati solo i 
+            primi due simboli e l'ultimo.
+
+            'vt' visualizza le informazioni dettagliate per ogni file su
+            più linee, come il valore di checksum il Sistema Operativo dove
+            si è creato l'archivio, le opzioni di compressione ed altri
+            parametri.
+
+            'vta' fornisce le informazioni dettagliate non solo per i file 
+             ma anche per le intestazioni ausiliarie, come i flussi NTFS 
+             o i dati sulla sicurezza dei file.
+
+             'vb' elenca semplicemente i nomi dei file con il percorso, 
+             uno per linea, senza informazioni addizionali.
+
+             Potete utilizzare l'opzione -v per elencare i contenuti di 
+             tutti i volumi facenti parte lo stesso insieme: 
+                rar v -v volume.part1.rar
+
+             I comandi 'vt', 'vta' e 'vb' corrispondono a 'lt', 'lta' e
+             'lb',
+
+
+    x       Estrae i file dall'archivio con i percorsi completi.
+
+            Esempi:
+
+            1) estrae il file '100lire.gif' nella cartella corrente senza 
+               visualizzare il commento dell'archivio:
+
+               rar x -c- monete 100lire.gif
+
+            2) estrae i file *.txt dall'archivio "documenti.rar" nella 
+               cartella "c:\documenti\":
+
+               rar x documenti.rar *.txt c:\documenti\
+
+            3) estrae l'intero contenuto dell'archivio "documenti.rar" 
+               nella cartella corrente:
+
+               rar x documenti.rar
+
+
+
+    Le opzioni, da utilizzare in congiunzione con un comando, sono:
+
+
+    -?      Visualizza un breve guida ai comandi ed alle opzioni. Questa è 
+            la stessa che appare se si esegue RAR.EXE senza alcun
+            parametro o con una sintassi del comando errata.
+
+    --      Stop scansione delle opzioni.
+            Questa opzione comunica a WinRAR che non ci sono più opzioni
+            da considerare nel seguito della linea di comando. Questo può
+            essere utile se il nome di un archivio o di un file inizia con
+            il carattere '-'. Senza l'opzione '--' questo nome viene
+            considerato da RAR come un'altra opzione.
+
+            Esempio:
+
+            Aggiungere tutti i file dalla cartella corrente in un archivio
+            solido dal nome '-NomeStrano':
+
+               rar a -s -- -NomeStrano
+
+
+    -@[+]   Disabilita [abilita] l'impiego di file di tipo lista_file
+
+            Analizzando la linea di comando, RAR considera un parametro che
+            inizi con il carattere '@' come una lista_file. In questo modo,
+            per definizione, RAR cerca di leggere il file 'nomefile' come
+            una lista_file se trova il parametro '@nomefile' nella linea di
+            comando. Ma se esiste un file, nell'archivio o nella cartella
+            d'origine, di nome '@nomefile', RAR considererà il parametro
+            '@nomefile' come un file e non come un lista_file.
+
+            L'opzione -@[+] permette di evitare questa ambiguità e 
+            definisce con precisione come gestire un parametro che inizi
+            con il carattere '@'.
+
+            Se specificate -@, tutti i parametri trovati dopo questa 
+            opzione verranno considerati come nomi di file, non come 
+            lista_file.
+
+            Se specificate -@+, tutti i parametri trovati dopo questa 
+            opzione verranno considerati come lista_file, non come nomi di 
+            file.
+
+            Questa opzione non influisce sui parametri localizzati nella 
+            linea di comando prima di essa.
+
+            Esempio:
+
+            Verifica il file archiviato di nome '@casa':
+
+            rar t -@ note.rar @casa
+
+
+    -ac     Cancella l'attributo "Modificato" ai file appena compressi o
+            estratti (solo per la versione di Windows).
+
+            Se questa opzione viene specificata durante l'archiviazione 
+            l'attributo "Modificato" verrà azzerato quando il file sarà
+            aggiunto all'archivio con successo. Se viene specificata 
+            durante l'estrazione, l'attributo "Modificato" viene azzerato 
+            per i file estratti.
+
+            Questa opzione non ha effetto sugli attributi della cartelle.
+
+
+    -ad     Appende il nome dell'archivio al percorso di destinazione.
+
+            Questa opzione può essere utile se si scompatta un gruppo di 
+            archivi. Per definizione RAR pone i file estratti da tutti 
+            gli archivi in un'unica cartella, mentre con questa opzione 
+            creerà varie cartella ognuna con il nome dell'archivio 
+            sorgente nella quale verranno posti i relativi file estratti.
+
+            Esempio:
+
+               rar x -an *.rar dati\
+
+            RAR creerà per ogni archivio da scompattare una sotto-cartella 
+            della cartella 'dati'.
+
+
+    -ag[formato]
+            Genera il nome dell'archivio utilizzando la data corrente.
+
+            Aggiunge al nome dell'archivio da creare o da processare una
+            sequenza legata alla data corrente. Utilissima per le copie
+            (backup) giornaliere.
+
+            Il formato della sequenza da appendere può essere definito nel
+            parametro opzionale [formato] oppure, se non specificato, è
+            "AAAAMMGGOOMMSS". La definizione del formato può includere i
+            seguenti caratteri:
+
+             Y   - Anno
+             M   - Mese
+             MMM - Iniziale del mese (Gen, Feb, ecc.)
+             W   - Il numero della settimana rispetto all'anno (una
+                   settimana inizia con Lunedì)
+             A   - Il numero del giorno corrente rispetto alla settimana
+                   (lunedì equivale ad 1, domenica a 7)
+             D   - Giorno
+             E   - Giorno dell'anno
+             H   - Ore
+             M   - Minuti (la M è considerata indicatore dei minuti se
+                   segue il carattere H delle ore)
+             I   - Minuti (considerata come indicatore dei minuti 
+                   indipendentemente dalla posizione dell'indicatore 
+                   delle ore)
+             S   - Secondi
+             N   - Progressivo dell'archivio. RAR esegue una ricerca degli 
+                   archivi con un nome generato uguale a quello da creare e
+                   se lo trova incrementa di 1 l'ultimo progressivo in modo
+                   da generare un nome univoco. Questo carattere 'N' non 
+                   può essere utilizzato quando si sta creando un archivio.
+                   Quando vengono eseguite delle operazioni non di 
+                   archiviazione, come l'estrazione, RAR seleziona un 
+                   archivio esistente precedente il primo 'N' non 
+                   utilizzato (che dovrebbe corrispondere all'ultimo 
+                   archivio creato) o imposta N ad 1 se non esistono 
+                   archivi.
+
+            Ogni carattere utilizzato nella definizione del formato 
+            rappresenta un solo carattere aggiunto al nome dell'archivio. 
+            Ad esempio utilizzate WW per il numero della settimana a due 
+            cifre o YYYY per l'anno a quattro cifre.
+
+            Se il primo carattere della definizione è '+' la posizione 
+            della  data e del nome base dell'archivio vengono scambiati in 
+            modo che la data preceda il nome base.
+
+            La definizione del nome dell'archivio può contenere del testo 
+            opzionale racchiuso dai caratteri '{' e '}'. Questo testo 
+            verrà inserito nel nome dell'archivio così com'è, ovviamente 
+            senza i due caratteri di delimitazione.
+
+            Qualsiasi altro carattere inserito nella definizione del
+            formato verrà inserito nel nome dell'archivio senza alcun
+            cambiamento.
+
+            Se necessitate gestire un archivio già esistente, fate
+            attenzione all'impiego di questa opzione . A seconda del
+            formato definito con l'opzione '-ag' e del tempo trascorso
+            dall'ultimo impiego di questa, i nomi dell'archivio esistente e
+            del nuovo possono non coincidere. In questo caso RAR creerà o
+            tenterà di aprire un nuovo archivio con il nuovo nome, invece
+            d'aggiornare quello esistente.
+            Potete utilizzare l'opzione -log per scrivere in un file il 
+            nome dell'archivio generato e leggerlo da questo per le 
+            operazioni seguenti.
+
+            Esempi:
+
+            1) Utilizzare il formato predefinito AAAAMMGGOOMMSS:
+
+                  rar a -ag copia
+
+               si otterrà un archivio dal nome simile a
+               'copia20000206193027.rar'.
+
+            2) Utilizzare il formato GG-MMM-AA (DD-MMM-YY):
+
+                  rar t -agDD-MMM-YY copia
+
+               si otterrà un archivio dal nome simile a
+               'copia20-02-00.rar'.
+
+            3) Utilizzare il formato AAAAMMGGOOMM (YYYYMMDDHHMM) ponendo 
+               la data prima di 'copia':
+
+                  rar a -ag+YYYYMMDDHHMM copia
+
+               si otterrà un archivio dal nome simile a
+               '200002061930copia.rar'.
+
+            4) Utilizzare il formato YYYY-WW-A, incluse le descrizioni dei 
+               campi:
+
+                  rar a -agYYYY{anno}-WW{settimana}-A{giorno_della_settimana} copia
+
+               si otterrà un archivio dal nome simile a:
+               'copia2002anno-06settimana-4giorno_della_settimana.rar'
+
+
+            5) Utilizzare il formato YYYYMMDD ed il progressivo 
+               dell'archivio. Questo permette di generare un nome univoco 
+               anche se il comando viene eseguito più volte in un giorno:
+
+               rar a -agYYYYMMDD-NN copia
+
+
+    -ai     Ignora gli attributi dei file archiviati.
+
+            Se questa opzione viene utilizzata durante l'estrazione, RAR 
+            non imposta gli attributi memorizzati nell'archivio per i file 
+            che vengono estratti.
+            Questa opzione permette di preservare gli attributi assegnati 
+            in automatico dal sistema operativo ai nuovi file creati.
+
+            Se questa opzione viene utilizzata per l'archiviazione, vengono 
+            memorizzati gli attributi predefiniti per file e cartelle 
+            invece di quelli attuali.
+
+            In Windows gli attributi sono Modificato, Sistema, Nascosto e 
+            Sola-Lettura. In Unix e Linux gli attributi implicati sono 
+            l'user, il group e gli altri permessi sui file.
+
+
+    -ao     Aggiunge solo i file con l'attributo "Modificato" attivo
+            (solo per la versione di Windows).
+
+            Questa opzione non ha effetto sulle cartelle e per questo 
+            motivo tutte le cartelle da archiviare vengono aggiunte 
+            indipendentemente dal valore dell'attributo "Modificato". 
+            Se non volete aggiungere alcuna informazione sulle cartelle 
+            indicate l'opzione -ed.
+
+            Esempio:
+
+            Aggiungere tutti i file del disco 'C:', che abbiano attivo
+            l'attributo "Modificato", all'archivio 'f:copia' e cancellare
+            da questi l'attributo "Modificato":
+
+               rar a -r -ac -ao f:copia c:\*.*
+
+
+    -ap     Impostare il percorso all'interno dell'archivio. Il percorso
+            definito utilizzando questa opzione viene aggiunto all'inizio
+            del nome dei file quando essi vengono inseriti in un archivio,
+            oppure viene rimosso dal nome dei file quando questi vengono
+            estratti.
+
+            Per esempio, se volete aggiungere il file leggimi.txt alla
+            cartella DOCUMENTI\ITA dell'archivio 'rilascio', potete
+            eseguire:
+
+               rar a -apDOCUMENTI\ITA rilascio leggimi.txt
+
+            o estrarre la cartella ITA nella cartella corrente:
+     
+               rar x -apDOCUMENTI rilascio DOCUMENTI\ITA\*.*
+
+
+    -as     Sincronizza i contenuti dell'archivio.
+
+            Se questa opzione è utilizzata durante l'archiviazione, i file
+            archiviati che non sono presenti nell'elenco attuale dei file
+            da aggiungere verranno eliminati dall'archivio stesso. È
+            conveniente utilizzare questa opzione in combinazione con '-u'
+            per ottenere una sincronizzazione completa dell'archivio e
+            delle cartelle archiviate.
+
+            Per esempio, dopo il comando:
+
+               rar a -u -as copia sorgenti\*.cpp
+
+            l'archivio 'copia.rar' conterrà solo i file *.cpp presenti
+            nella cartella sorgenti, tutti gli altri eventuali file
+            verranno cancellati dall'archivio stesso. È un'operazione
+            simile alla creazione di un archivio ma con una sostanziale
+            differenza: se non ci sono file modificati dalla precedente
+            copia, l'operazione viene svolta molto più velocemente della
+            creazione di un nuovo archivio.
+
+
+    -cfg-   Disabilita la lettura dei parametri predefiniti dalla
+            variabile d'ambiente RAR e/o dal file di configurazione.
+
+    -cl     Converte i nomi dei file in minuscolo.
+
+
+    -cu     Converte i nomi dei file in maiuscolo.
+
+
+    -c-     Disabilita la visualizzazione dei commenti.
+
+
+    -df     Cancella i file dopo essere stati archiviati.
+
+            Muove i file nell'archivio. Questa opzione, in combinazione
+            del comando 'a', esegue la stessa azione del comando 'm'.
+
+
+    -dh     Apre i file già in uso da altri programmi.
+
+            Permette di processare file aperti in scrittura da altre
+            applicazioni.
+
+            Questa opzione può essere utile se un'applicazione permette 
+            l'accesso in lettura ad un file e nel contempo qualsiasi tipo 
+            d'accesso al file è proibito, portando al fallimento 
+            dell'operazione stessa.
+
+            Attenzione perché questa opzione può danneggiare i dati da
+            processare in quanto permettere l'archiviazione di un file
+            mentre questo può essere in modifica da parte di un'altra
+            applicazione. Utilizzatelo con estrema attenzione!
+
+
+    -dr     Elimina i file ponendoli nel "Cestino" di Windows.
+
+            Elimina i file dopo averli archiviati ponendoli nel "Cestino" 
+            di Windows. Disponibile solo nella versione per Windows.
+
+
+    -ds     Non ordina i file da inserire in un archivio solido.
+
+
+    -dw     Pulisci lo spazio file dopo l'archiviazione
+
+            Prima di eliminare i file a seguito della loro archiviazione, 
+            lo spazio occupato da questi viene sovrascritto con dei byte 
+            di valore 0 per prevenire l'eventuale ripristino dei dati 
+            apparentemente eliminati. Inoltre i file vengono troncati e 
+            rinominati con un nome temporaneo.
+
+            Ponete attenzione al fatto che questo approccio è stato 
+            progettato per i dischi rigidi (HD) ma può fallire per 
+            sovrascrivere i dati originali dei file se questi sono su dei 
+            dischi allo stato solido (SSD) come conseguenza dell'impiego 
+            della tecnologia "SSD wear leveling" e di un indirizzamento 
+            dei dati molto più complicato.
+    
+    
+    -ed     Non aggiunge le cartelle se vuote.
+
+            Questa opzione indica a RAR di non aggiungere all'archivio le 
+            informazioni sulle cartelle durante una fase di creazione o
+            aggiornamento, ma solo le informazioni dei file.
+            Quando RAR estrae da un archivio, creerà delle cartelle 
+            non-vuote basandosi solo sulle informazioni di percorso dei
+            file archiviati, e in conseguenza di questo le informazioni
+            sulle cartelle vuote verranno perse.
+            Verranno altresì persi tutti gli attributi estesi, salvo il 
+            nome, anche delle cartelle non-vuote, come i diritti 
+            d'accesso, quindi utilizzate questa opzione se non volete 
+            preservare tali dati.
+
+            Se l'opzione '-ed' è utilizzata in congiunzione al comando 'm' 
+            o all'opzione '-df', RAR non rimuoverà le cartelle vuote.
+
+
+    -en     Non aggiunge il blocco di "fine archivio".
+
+            Opzione non supportata per il formato RAR 5.0.
+            
+            Per definizione, RAR aggiunge sempre il blocco "fine archivio"
+            al termine di un archivio nuovo o aggiornato. Questo permette
+            di non considerare dati esterni appesi in coda, come le firme
+            digitali di sicurezza, ma in alcuni casi può essere utile
+            disabilitare questa prestazione. Ad esempio, se un archivio
+            viene trasferito tra due sistemi attraverso un canale non
+            affidabile, può accadere il raro caso che venga trasmesso una
+            parte del blocco di "fine archivio" ma non tutto, in quanto
+            solitamente è di 7 byte. Se prima della ritrasmissione il
+            mittente aggiunge dei file in coda e il trasferimento inizia
+            con l'accodamento dei nuovi dati a quelli già inviati, durante
+            l'estrazione WinRAR blocca l'operazione appena incontra la
+            prima parte del vecchio "fine archivio", escludendo tutti i
+            nuovi dati aggiunti. Disabilitando l'aggiunta di questo blocco
+            si possono evitare situazioni simili, comunque rare ad
+            accadere.
+
+            Questa opzione non può essere usata con gli archivi 
+            multi-volume in quanto il blocco di "fine archivio" contiene 
+            informazioni importanti per la corretta gestione dei volumi.
+
+
+    -ep     Non archivia il percorso originale dei file da inserire.
+            Con questa opzione i file vengono aggiunti ad un archivio
+            senza includere le eventuali informazioni sul percorso
+            originale. Questa operazione è utile, ad esempio, se da una
+            certa cartella si vogliono archiviare file residenti in
+            un'altra cartella ma non si vuole appunto inserire le
+            informazioni sul percorso originale. Attenzione che questa
+            opzione può portare ad avere archivi con più file aventi lo
+            stesso nome.
+
+            Se l'opzione viene utilizzata durante la scompattazione, i 
+            percorsi archiviati dei file estratti verranno ignorati, in 
+            questo modo tutti i file verranno creati nella stessa 
+            cartella.
+
+
+    -ep1    Non archivia o non estrae il percorso inserito nella linea di 
+            comando. Questa opzione viene ignorata sela il percorso 
+            specificato include dei caratteri jolly.
+
+            Esempi:
+
+            1) tutti i file e le cartelle della cartella 'tmp' verranno 
+               aggiunte all'archivio 'raccolta', ma il percorso 
+               memorizzato non deve includere 'tmp\'
+
+                  rar a -ep1 -r raccolta tmp\*
+
+               Questo è equivalente ai comandi:
+
+                  cd tmp
+                  rar a -r raccolta
+                  cd ..
+
+            2) estrai i file che rispondo alla maschera "immagini\*" nella 
+               cartella "\destinazione", ma rimuovi "immagini" dal 
+               percorso dei file creati:
+
+                  rar x -ep1 dati immagini\* destinazione\
+
+
+
+    -ep2    Archivia il percorso completo. Quando inserisce un file
+            nell'archivio, include nel suo nome il percorso d'origine
+            completo, escluso il nome del dispositivo (disco) ed il primo
+            separatore di percorso ('\' o '/').
+
+
+    -ep3    Archivia il percorso completo anche della lettera del disco. 
+            Solo nella versione per Windows.
+
+            Questa opzione memorizza il percorso del file completo anche 
+            della lettera del disco se utilizzato durante l'archiviazione. 
+            Il separatore del disco, il carattere ':', due-punti, viene 
+            sostituito dal carattere '_'.
+
+            Se utilizzate poi l'opzione -ep3 durante l'estrazione, il 
+            carattere '_' verrà sostituito con il due-punti ed in questo 
+            modo i file verranno scompattati nel disco e nella cartella 
+            originali. Se viene specificato un percorso di destinazione, 
+            questo verrà ignorato.
+
+            Inoltre converte i percorsi UNC da \\servente\condivisione in 
+            __servente\condivisione durante l'archiviazione e li 
+            ripristina allo stato originale durante l'estrazione.
+            
+            Questa opzione è utile per la copia di più dischi in un unico 
+            archivio. Ad esempio potete eseguire:
+
+               rar a -ep3 -r copia.rar c:\ d:\ e:\
+
+            per creare la copia di sicurezza, e:
+      
+               rar x -ep3 copia.rar
+
+            per ripristinarla.
+
+            Ma ponete attenzione, ed utilizzare l'opzione -ep3 solo se 
+            siete sicuri che l'archivio da cui estrarre i file non ne 
+            contenga alcuni dannosi.
+            In altre parole, utilizzatela solo se avete creato l'archivio 
+            voi stessi o se avete fiducia dell'autore. Infatti questa 
+            opzione permette di sovrascrivere qualsiasi file in qualsiasi 
+            posizione del vostro computer, inclusi file di sistema 
+            importanti, e normalmente dovrebbe essere utilizzato solo a 
+            scopo di copia di sicurezza e ripristino di questa.
+
+
+    -e[+]<attr> 
+            Specifica la maschera degli attributi dei file che devono o non 
+            devono essere processati. 
+
+            Senza il carattere '+' posto prima di <attr>, questa opzione 
+            definisce una maschera che individua i file da escludere 
+            dalla processazione.
+            Se invece il carattere '+' è presente, la maschera individua i 
+            file da includere durante la processazione.
+            
+            <att> è un numero o in base decimale, o in base ottale se
+            inizia con il carattere '0' (zero), o esadecimale se inizia con
+            i caratteri '0x' (zero-ics). Se il risultato della comparazione
+            AND bit-per-bit è diverso da 0 (zero), ovvero anche solo un
+            attributo corrisponde a quelli qui indicati, il file verrà
+            (opzione con '+') o non verrà (opzione senza '+') processato.
+            I valori numerici relativi ai singoli attributi, validi in RAR 
+            per Windows, sono indicati nella seguente tabella:
+
+              dec. | ott.| esad.|attr.| spiegazione
+             ------+-----+------+-----+--------------------------
+                1  |  01 |  0x1 |  R  | sola lettura (read-only)
+                2  |  02 |  0x2 |  H  | nascosto (hidden)
+                4  |  04 |  0x4 |  S  | sistema (system)
+                8  | 010 |  0x8 |  L  | etichetta (label) - NON SUPPORTATA
+               16  | 020 | 0x10 |  D  | cartella (directory)
+               32  | 040 | 0x20 |  A  | modificato (archived)
+
+            Come indicato, la sintassi nella forma L='etichetta' non è 
+            supportato nella versione di RAR per Windows.
+            Per determinare un numero che corrisponda a più attributi,
+            basta sommare tra loro i valori dei singoli attributi
+            desiderati, avendo cura d'eseguire le somme correttamente nel
+            caso si utilizzino le basi ottale o esadecimale
+
+            Nella versione per Windows è inoltre possibile indicare, oltre 
+            alla maschera numerica, direttamente i caratteri D, S, H, A e
+            R la cui corrispondenza è riportata nella tabella di cui sopra. 
+            L'ordine con cui vengono indicati gli attributi non è 
+            importante.
+
+            È possibile specificare entrambe le opzioni -e<attr> e 
+            -e+<attr> nella stessa linea di comando.
+
+            Esempio:
+
+            1) Aggiungere all'archivio 'rapporto' tutti i file meno quelli
+               con attributo 'nascosto' e 'sistema'; utilizzando i
+               caratteri per identificare gli attributi, il comando è:
+
+                  rar a rapporto -ehs
+
+               utilizzando la maschera numerica in base decimale, il comando
+               è (2+4):
+
+                  rar a rapporto -e6
+
+               mentre il valore numerico in ottale è '06' ed in esadecimale
+               è '0x6'.
+
+            2) Aggiungere all'archivio solo i nomi delle cartelle senza il 
+               loro contenuto:
+
+                  rar a -r -e+d cartelle
+
+               oppure -e+16, -e+020, -e+0x10.
+
+            3) Non estrarre i file di sola-lettura:
+
+                  rar x -er archivio
+
+
+    -f      Aggiorna solo i file compresi nell'archivio.
+            Questa opzione può essere utilizzata nella creazione o
+            nell'estrazione da un archivio. Per la creazione, la porzione
+            di linea di comando "a -f" è equivalente al comando 'f'.
+            Potete utilizzare l'opzione '-f' anche con il comando 'm' o
+            'mf'. Se l'opzione '-f' viene utilizzata nell'estrazione con
+            il comando 'x' o 'e', allora solo i file più vecchi verranno
+            sostituiti da quelli nuovi estratti dall'archivio. I file
+            archiviati che non trovano riscontro come nome con quelli non
+            compressi, non verranno estratti.
+
+
+    -hp[parola_chiave] 
+            Cifra sia i dati che l'intestazione dell'archivio.
+
+            Questa opzione è simile a '-p[parola_chiave]' ma, mentre questa
+            cifra solo i dati e lascia leggibili le informazioni dei
+            file, con '-hp[parola_chiave]' viene cifrata anche
+            l'area con il nome del file, la sua dimensione, gli eventuali
+            attributi e commento oltre ad altri dati sensibili, in modo da
+            aumentare il grado di riservatezza. Senza la parola chiave è
+            persino impossibile visualizzare l'elenco del contenuto di un
+            archivio cifrato con l'opzione '-hp'.
+
+            Esempio:
+
+               rar a -hpfGzq5yKw segreto rapporto.txt
+
+            aggiungerà il file 'rapporto.txt' all'archivio cifrato 
+            'segreto.rar' utilizzando la parola chiave 'fGzq5yKw'.
+
+
+    -ht[b|c]
+            Seleziona il tipo di algoritmo utilizzato per determinale la 
+            "firma" [BLAKE2, CRC32] per il controllo d'integrità di un 
+            file.
+
+            L'integrità dei file di un archivio RAR viene garantita da una 
+            particolare "firma" calcolata e memorizzata per ogni file 
+            archiviato.
+
+            Per definizione RAR utilizza l'algoritmo CRC32 per calcolare 
+            questa "firma". Il formato di archiviazione RAR 5.0 permette 
+            d'utilizzare anche l'algoritmo BLAKE2sp invece del CRC32.
+
+            Specificare l'opzione -htb per utilizzare l'algoritmo BLAKE2sp 
+            e -htc per quello CRC32.
+            Siccome l'algoritmo predefinito è il CRC32, dovete utilizzare 
+            l'opzione -htc solo per sovrapporsi ad una eventuale 
+            configurazione alternativa definita per RAR.
+
+            L'algoritmo CRC32 genera "firme" con lunghezza di 32 bit. 
+            Mentre le caratteristiche di CRC32 sono adatte per individuare
+            errori non intenzionali nei dati, non sono sufficientemente
+            attendibili per verificare l'identità dei dati del file. In
+            altre parole se 2 file hanno la stessa "firma" generata
+            dall'algoritmo CRC32 non significa che il contenuto sia
+            identico.
+
+            L'algoritmo BLAKE2sp genera "firme" con lunghezza di 256 bit. 
+            Essendo un algoritmo di cifratura complesso, è 
+            praticamente garantito che due file aventi la stessa "firma" 
+            BLAKE2sp hanno anche lo stesso contenuto. Inoltre 
+            l'individuazione degli errori è più affidabile rispetto al più 
+            "corto" CRC32.
+
+            Siccome le "firme" generate da BLAKE2sp sono più lunghe, 
+            l'archivio risultante utilizzando l'opzione -htb sarà 
+            leggermente più grande.
+
+            Se l'intestazione di un archivio non è cifrata (no opzione 
+            -hp) le "firme" dei file cifrati con il formato RAR 5.0 
+            sono modificate utilizzando uno speciale algoritmo dipendente 
+            dalla parola chiave in modo da rendere impossibile indovinare 
+            il contenuto di un archivio basandosi sulla sua "firma". Non 
+            aspettatevi quindi che le "firme" dei file cifrati siano 
+            uguali a quelle generate normalmente dagli algoritmi CRC32 e 
+            BLAKE2sp.
+
+            Questa opzione è supportata solo dal formato RAR 5.0 e per 
+            questo dovete utilizzare assieme anche l'opzione -ma.
+
+            Potete vedere la "firma" dei file archiviati utilizzando i 
+            comandi 'vt' o 'lt'.
+
+            Esempi:
+
+            rar a -ma -htb elenchi.rar *.lst
+
+            aggiungerà tutti i file con estensione .lst all'archivio 
+            elenchi.rar utilizzando le "firme" BLAKE2sp per il controllo
+            dell'integrità.
+
+
+    -id[c,d,p,q]
+            Disabilita la visualizzazione di alcuni messaggi:
+
+            -idc disabilita il messaggio sui diritti d'autore;
+
+            -idd disabilita il messaggio "Fatto" visualizzato alla fine 
+                 dell'operazione di compattazione/scompattazione;
+
+            -idp disabilita la visualizzazione dell'indicatore di 
+                 percentuale dell'operazione;
+
+            -idq attiva la modalità "silenziosa" dove vengono visualizzati 
+                 solo i messaggi d'errore e le eventuali richieste.
+
+            Possono essere utili quando si re-direziona il testo del video
+            verso un file.
+
+            È permesso specificare più opzioni contemporaneamente, quindi 
+            l'opzione '-idcdp' è corretta.
+
+
+    -ieml[.][indirizzo]
+            Invia un archivio via email. Opzione valida solo nella 
+            versione per Windows.
+
+            Allega un archivio creato o aggiornato ad un messaggio di 
+            email. Perché questo funzioni dovete avere installato un 
+            gestore di posta elettronica che supporti lo standard MAPI (la 
+            maggior parte dei programmi di posta elettronica supportano 
+            questa interfaccia).
+
+            Dovete inserire l'indirizzo email direttamente dopo l'opzione, 
+            altrimenti vi verrà chiesto in seguito dal vostro programma di 
+            posta elettronica. È possibile specificare più indirizzi, 
+            separati tra loro da una virgola a o da un punto-e-virgola.
+
+            Se appendete il carattere '.' a '-ieml', l'archivio verrà 
+            cancellato una volta allegato al messaggio email.
+
+            Se l'opzione verrà utilizzata durante la creazione di un 
+            archivio multi-volume, ogni volume verrà allegato ad uno 
+            specifico messaggio email.
+
+
+    -ierr   Invia tutti i messaggi a stderr.
+
+
+    -ilog[nome]
+            Memorizza i messaggi d'errore in un file di tracciato
+            (solo per gli utenti registrati).
+
+            Scrive tutti i messaggi d'errore in un file di tracciato. Se 
+            l'opzione 'nome' non viene specificata, il file di tracciato 
+            viene creato secondo le seguenti regole predefinite:
+            
+            Unix:    il file .rarlog viene creato nella directory home 
+                     dell'utente;
+
+            Windows: il file rar.log viene creato nella cartella 
+                     %APPDATA%\WinRAR;
+
+            Se il parametro 'nome' include solo il nome del file senza un 
+            percorso, il file qui indicato verrà creato nella cartella /
+            directory utilizzando i criteri sopra riportati. Se volete 
+            creare il file di tracciato in un altra cartella / directory, 
+            includete nel parametro 'nome' sia il percorso che il nome del 
+            file da creare.
+
+            Per definizione i file di tracciamento utilizzano la codifica 
+            "UTF-16 bit meno significativi" ma può essere cambiata 
+            utilizzando l'opzione "-sc<set_caratteri>g", come ad esempio 
+            -scag per utilizzare la codifica nativa ad un solo byte.
+
+            Esempio:
+
+               rar a -ilogc:\tracciati\copia.log copia d:\dos
+
+            creerà il file di tracciato "c:\tracciati\copia.log" nel caso 
+            si presentassero errori durante la creazione dell'archivio.
+
+
+    -inul   Disabilita la visualizzazione di qualsiasi messaggio.
+
+
+    -ioff   Spegne il vostro computer al termine dell'operazione che si va 
+            ad attivare con il presente comando. Questa prestazione può
+            essere impiegata solo su calcolatori che supportino lo
+            spegnimento da programma. 
+            Opzione disponibile solo nella versione di RAR per Windows.
+
+    
+    -isnd   Abilita l'emissione dei suoni.
+
+
+    -iver   Visualizza la versione di RAR e chiude il programma. Potete 
+            eseguire semplicemente "RAR -iver".
+   
+    
+    -k      Blocca l'archivio.  Ogni operazione di modifica eseguita su un
+            archivio bloccato verrà ignorata.
+
+
+    -kb     Estrai anche i file danneggiati.
+
+            Per definizione, RAR non estrae un file se fallisce la verifica
+            della "firma" di integrità. Con l'opzione '-kb' specificata,
+            questi file verranno estratti comunque, anche se i dati
+            risultanti saranno quasi sicuramente danneggiati.
+
+
+    -log[formato][=nome]
+            Scrive i nomi dei file processati in un file di tracciato.
+
+            Questa opzione scrive i nomi degli archivi e dei file gestiti
+            in uno specifico file di testo durante i comandi di
+            archiviazione, estrazione, eliminazione, elencazione e 
+            verifica.
+            Il suo comportamento dipende dal parametro 'formato' che può 
+            includere uno o più dei seguenti caratteri:
+
+            A - Scrivi i nomi degli archivi processati nel file di 
+                tracciato. Se RAR crea o processa dei volumi, verranno
+                inclusi tutti i nomi dei volumi.
+
+            F - Scrivi i nomi dei file processati nel file di tracciato. 
+                Questo include i file aggiunti ad un archivio ed i file 
+                inclusi in un archivio se estratti, eliminati o elencati.
+
+            P - Se esiste già un file di tracciato con questo nome, 
+                appende i dati al file esistente invece di crearne 
+                un altro.
+
+            U - Scrivi i dati nel formato Unicode.
+
+            Se non vengono specificati 'A' o 'F', viene assunto 'A'.
+
+            Il parametro 'nome' permette di specificare il nome del file 
+            di tracciato. Deve essere separato dal 'formato' dal carattere 
+            '='. Se il 'nome' non è presente, verrà utilizzato il nome 
+            predefinito rarinfo.log.
+
+            È possibile specificare più opzioni -log nella stessa linea 
+            di comando.
+
+            Questa opzione è particolarmente utile quando volete gestire, 
+            all'interno di un file batch, degli archivi creati con le 
+            opzioni -ag o -v. Potete specificare -loga=nomearchivio.txt 
+            quando create un archivio e leggere quindi il nome 
+            dell'archivio generato dal file nomearchivio.txt con un 
+            comando appropriato. Ad esempio, in un file batch di Windows 
+            potrebbe essere definita l'istruzione: 
+            "set /p nome=<nomearchivio.txt".
+
+            Esempi:
+
+            1) scrivi i nomi dei volumi creati nel file elencovolumi.txt:
+
+               rar a -v100m -loga=elencovolumi.txt volume.rar c:\data
+
+            2) scrivi il nome dell'archivio generato nel file copia.txt in 
+               formato Unicode:
+
+               rar a -ag -logau=copia.txt copia.rar mieifile\*
+
+            3) scrivi i nomi dei volumi verificati nel file 
+               elencovolumi.txt mentre i nomi dei file dell'archivio 
+               verificati nel file elencofile.txt:
+
+               rar t -log=elencovolumi.txt -logf=elencofile.txt volume.part01.rar
+
+
+    -m<n>   Seleziona il livello di compressione:
+
+       -m0   memorizzazione  Aggiunge i file all'archivio senza
+                             comprimerli.
+       -m1   più veloce      Metodo più veloce, ma con livello di
+                             compressione più basso.
+       -m2   veloce          Metodo di compressione veloce.
+       -m3   normale         Metodo con una compressione e velocità
+                             normale (predefinito).
+       -m4   buona           Metodo con buona compressione.
+       -m5   migliore        Metodo con miglior compressione, ma anche il
+                             più lento.
+
+            Se questa opzione non viene specificata, RAR utilizza il 
+            livello di compressione normale, '-m3'.
+
+
+    -ma[4|5]
+            Specifica la versione del formato di archiviazione.
+
+            Per definizione RAR crea archivi con il formato 5.0.
+            Utilizzate l'opzione -ma4 per creare archivi in formato
+            RAR 4.0.
+            Utilizzate l'opzione -ma5, o semplicemente -ma, solo per
+            sovrapporsi ad una eventuale opzione -ma4 definita nella
+            configurazione predefinita di RAR; in questo modo verrà
+            utilizzato il formato 5.0.
+
+            Questa opzione viene utilizzata solo durante la creazione di 
+            un nuovo archivio. Verrà ignorata durante l'aggiornamento di 
+            un archivio già esistente.
+
+
+    -mc<parametro>
+            Permette di definire i parametri avanzati per la compressione.
+
+            Questa opzione è prevista essenzialmente per test ed 
+            esperimenti, in quanto per un uso normale è meglio permettere
+            a RAR di selezionare in automatico i parametri di compressione 
+            avanzati.
+            Notate che l'uso improprio di queste opzioni può portare a
+            delle perdite notevoli in prestazione e compressione, quindi
+            utilizzatele solo se avete capito chiaramente su cosa esse
+            vanno ad influire.
+
+            La sintassi completa è:
+
+               -mc[parametro1][:parametro2][modulo][+ o -]
+
+            dove <modulo> è uno dei caratteri che denotano l'algoritmo di 
+            compressione che si va a configurare.
+
+            Questo può assumere i valori:
+
+              A       - compressione di file audio;
+              C       - compressione di immagini ad alta profondità di 
+                        colore (RGB);
+              D       - compressione delta;
+              E       - compressione per file eseguibili x86;
+              I       - compressione per file eseguibili Intel Itanium;
+              T       - compressione di file di testo.
+
+            Il formato di archiviazione RAR 5.0 supporta solo i valori 'D' 
+            ed 'E'.
+
+            Il segno '+' alla fine dell'opzione forza RAR ad applicare 
+            l'algoritmo selezionato a tutti i dati processati, mentre il 
+            segno '-' disabilita questo algoritmo completamente. Se non 
+            viene specificato alcun segno, RAR selezionerà in automatico 
+            l'algoritmo più appropriato basandosi sul tipo di dati e sul 
+            metodo di compressione selezionato.
+
+            L'opzione '-mc-' disabilita l'impiego di tutti i moduli 
+            speciali e permette l'impiego del solo algoritmo generale.
+
+            [parametro1] e [:parametro2] dipendono dal tipo di modulo, come 
+            descritto di seguito.
+
+
+            Compressione Audio e compressione Delta:
+
+               [parametro1] è il numero dei canali a singolo byte e può 
+               assumere il valore da 1 a 31. RAR suddivide i canali 
+               multi-byte in canali ad 1 byte; ad esempio due canali audio 
+               a 16-bit vengono considerati da RAR come 4 canali a 1 byte 
+               per uno.
+
+               [parametro2] viene ignorato.
+
+
+            Compressione di eseguibili x86, di eseguibili Intel Itanium e 
+            di immagini ad alta profondità di colore:
+
+               [parametro1] e [parametro2] vengono ignorati.
+
+
+            Compressione testo: 
+
+               L'algoritmo di compressione del testo comporta un alto 
+               fattore di compressione rispetto ad un testo in chiaro. 
+               Questo algoritmo però non può essere ottimizzato per 
+               l'impiego in ambienti multi-processore e multi-core e in 
+               questi casi il tempo di compressione risulta molto più alto 
+               rispetto all'algoritmo generale. 
+               Inoltre anche la velocità di decompressione è inferiore 
+               rispetto a quella dell'algoritmo generale, 
+               indipendentemente dal numero di processori.
+               Questi sono i due motivi perché l'algoritmo di compressione
+               del testo è stato disabilitato per definizione. 
+               Potete specificare l'opzione -mct per permettere a RAR 
+               d'utilizzare automaticamente questo algoritmo per i dati 
+               appropriati. L'opzione -mct+ forzerà l'impiego 
+               dell'algoritmo di compressione testo per tutti i dati.
+
+               L'opzione -mct può anch'essa includere [parametro1] e 
+               [parametro2], così la sintassi completa diventa:
+               -mc[parametro1][parametro2]t[+ o -].
+
+               [parametro1] indica l'ordine per l'algoritmo PPM e può 
+               assumere valori da 2 a 63. Solitamente un valore superiore 
+               migliora leggermente il rapporto di compressione ma solo se 
+               è disponibile una quantità sufficiente di memoria RAM. In 
+               caso di mancanza di memoria il risultato peggiora, invece 
+               di migliorare. Inoltre un valore superiore decrementa la 
+               velocità sia di compressione che di decompressione.
+
+               [parametro2] è la memoria allocata per l'algoritmo PPM, 
+               espressa in megabyte, e può assumere i valori da 1 a 128. 
+               Valori superiori possono migliorare il rapporto di 
+               compressione, ma notate che l'algoritmo PPM utilizza la 
+               stessa dimensione di memoria sia per comprimere che per 
+               decomprimere, così se allocate troppa memoria quando create 
+               un archivio, gli altri che riceveranno il vostro archivio 
+               possono aver problemi a decomprimerlo se non hanno un 
+               quantitativo di memoria installato sufficiente. La 
+               scompattazione può avvenire comunque utilizzando la memoria 
+               virtuale di Windows, ma questo comporta una riduzione 
+               notevole della velocità.
+
+            Esempi:
+
+            1) L'opzione '-mc1a+' forza RAR ad utilizzare la 
+               compressione per file audio monocanali ad 8-bit per tutti i 
+               dati.
+
+            2) L'opzione 'mc10:40t+' forza RAR ad utilizzare l'algoritmo 
+               di compressione dei testi per tutti i dati, impostando 
+               l'ordine di compressione a 10 e allocando 40 MByte di 
+               memoria.
+
+            3) L'opzione '-mc12t' imposta l'ordine di compressione 12 
+               all'algoritmo specifico per i testi, lasciando a RAR la
+               possibilità di scegliere quando usarlo o meno.
+
+            4) Le opzioni '-mct -mcd-' abilitano RAR ad applicare 
+               l'algoritmo di compressione dei testi ai dati appropriati e 
+               disabilitano la compressione delta.
+
+
+    -md<n>[k,m,g]
+            Seleziona la dimensione del dizionario di compressione.
+    
+            Il "dizionario di compressione" corrisponde ad un memoria di 
+            dimensione variabile utilizzata dall'algoritmo di 
+            compressione per individuare e comprimere i modelli 
+            ripetitivi.
+            Se la dimensione del file da comprimere (o la dimensione totale
+            di tutti i file nel caso di un archivio in formato "solido") è
+            maggiore della dimensione del dizionario, incrementandolo
+            generalmente migliora il rapporto di compressione, decresce la
+            velocità di compressione e aumenta la quantità di memoria
+            richiesta.
+
+            Per il formato di archiviazione RAR 4.x il dizionario di
+            compressione può assumere i valori di 64 KB, 128 KB, 256 KB,
+            512 KB , 1 MB, 2 MB o 4 MB.
+
+            Per il formato di archiviazione RAR 5.0 il dizionario di 
+            compressione può assumere i valori di 128 KB, 256 KB, 512 KB, 
+            1 MB, 2 MB, 4 MB, 8 MB, 16 MB, 32 MB, 64 MB, 128 MB, 256 MB, 
+            512 MG e 1 GB.
+
+            Potete utilizzare i modificatori 'k', 'm' e 'g' per 
+            specificare la dimensione come kilo-, mega- e giga-byte, come 
+            ad esempio -md64m sta per un dizionario di 64 MB.
+            Se non viene specificato alcun modificatore viene assunto 
+            megabyte; quindi -md64m equivale a -md64.
+
+            Durante l'archiviazione RAR necessita di una quantità di 
+            memoria sei volte superiore alla dimensione del dizionario 
+            specificata; per questo motivo i valori 512 MB e 1 GB sono 
+            disponibili solo per RAR in versione a 64 bit.
+            Durante l'estrazione viene allocata una memoria appena 
+            superiore alla dimensione del dizionario di compressione, in 
+            questo modo sia la versione a 32 bit che quella a 64 bit di 
+            RAR possono scompattare archivi con un dizionario di 
+            compressione sino a 1 GB.
+
+            Se la dimensione di tutti i file sorgenti da comprimere in un 
+            archivio solido, o nel caso di un archivio non-solido la 
+            dimensione del file di dimensioni maggiori, è almeno due volte 
+            meno della dimensione del dizionario, RAR può ridurre la
+            dimensione del dizionario stesso. Tutto ciò porta ad una
+            riduzione dell'impiego della memoria senza alcun peggioramento
+            della compressione.
+
+            La dimensione predefinita per il dizionario di compressione è 
+            di 4 MB per il formato di compressione RAR 4.x e di 32 MB per 
+            il formato 5.0.
+
+            Esempio:
+
+               rar a -s -ma -md128 lib *.dll
+
+            crea un archivio solido in formato RAR 5.0 e con un dizionario 
+            di compressione di 128 MB.
+
+
+    -ms[<elenco>]
+            Specifica le estensioni di quei file da memorizzare senza 
+            comprimerli.
+
+            Questa opzione può essere utilizzata per archiviare file già 
+            compressi: aiuta a velocizzare le operazioni di archiviazione
+            senza apportare un apprezzabile diminuzione del rapporto di
+            compressione.
+
+            Il parametro opzionale <elenco> definisce l'elenco delle 
+            estensioni da considerare, separare da un ';'. Ad esempio 
+            '-msrar;zip;jpg' forzerà RAR a memorizzare senza comprimere 
+            gli archivi in formato RAR e ZIP, oltre alle immagini in 
+            formato JPG. È inoltre possibile specificare i caratteri 
+            jolly nell'elenco, così '-ms*.rar;*.zip;*.jpg' è comunque 
+            valido.
+            E' permesso inserire più ricorrenze dell'opzione -ms, come 
+            "-msrar -mszip" invece di "-msrar;zip".
+
+            In Unix l'opzione -ms contenente più tipi di file deve essere 
+            racchiusa tra i doppi apici. Questo protegge il 
+            punto-e-virgola dall'essere considerato dalla shell Unix. 
+            Un'altra soluzione è utilizzare più ricorrenze dell'opzione 
+            -ms<tipo> per ogni tipo di file.
+
+            Se il parametro [elenco] viene omesso, l'opzione '-ms' 
+            utilizza l'insieme predefinito delle estensioni, ovvero:
+
+            7z, ace, arj, bz2, cab, gz, jpeg, jpg, lha, lz, lzh, mp3,
+            rar, taz, tgz, xz, z, zip, zipx
+
+
+    -mt<processi>
+            Imposta il numero dei processi (threads). È attivabile solo 
+            su computer con più CPU, CPU multi-core e CPU con la 
+            tecnologia "hyperthreading".
+
+            Il parametro <processi> può assumere un valore da 1 a 32 e
+            definisce il numero massimo raccomandato dei processi 
+            utilizzati sia dall'algoritmo di compressione sia da altri 
+            moduli di RAR qualora necessitino d'utilizzino più processi. 
+            Anche se RAR cercherà di seguire questa raccomandazione, 
+            qualche volta il numero reale dei processi attivi potrà essere 
+            superiore al valore specificato.
+
+            Una variazione del valore di <processi> può modificare il
+            rapporto di compressione e per questo motivo degli archivi
+            creati con un diverso valore di -mt possono non avere la stessa
+            dimensione, anche se si parte dagli stessi file e gli altri
+            parametri sono uguali.
+
+            Se l'opzione -mt non viene specificata, RAR tenta d'individuare
+            il numero dei processi disponibili e selezionerà
+            automaticamente la quantità ottimale di processi da utilizzare.
+
+
+    -n<maschera_file>
+            Aggiunta filtri addizionali per l'inclusione dei file.
+            
+            Aggiunge <maschera_file> come ulteriore filtro per includere i 
+            file nell'elenco di quelli da gestire.
+            Si possono utilizzare i caratteri jolly '?' e '*' per definire 
+            dei filtri, inserendoli sia al posto del nome del file o della 
+            cartella sia dal lato del percorso.
+            Leggete la descrizione dell'opzione -x per ottenere ulteriori 
+            informazioni sulla sintassi della <maschera_file>.
+            Potete inserire questa opzione più volte in una linea di comando.
+
+            Questa opzione non sostituisce le maschere dei file 
+            solitamente specificate nella linea di comando. È solo un 
+            filtro addizionale applicabile a tutti i file da processare. 
+            In alcuni casi può essere utile per ridurre la lunghezza delle 
+            linea di comando.
+
+            Ad esempio, se volete comprimere tutti i file *.txt e *.lst 
+            delle cartelle Progetto e Informazioni, solitamente si digita 
+            il comando:
+
+               rar a copia -r Progetto\*.txt Progetto\*.lst Informazioni\*.txt Informazioni\*.lst
+
+            Utilizzando l'opzione -n diventa:
+
+               rar a copia -r -n*.txt -n*.lst Progetto Informazioni
+
+
+    -n@<file_elenco>
+            Aggiunge altri "filtri di inclusione file" prelevandoli dal file 
+            d'elenco <file_elenco>.
+
+            È simile all'opzione -n<file> ma le maschere dei file le 
+            legge dal file <file_elenco>. 
+            Se utilizzate l'opzione -n@ senza il nome del file d'elenco 
+            leggerà i filtri da stdin.
+
+            Per Windows 'stdin', in assenza di altri parametri, corrisponde
+            a digitare le maschere dei file direttamente da linea di
+            comando, premendo 'Invio' tra una linea ed un'altra e ^Z
+            (Ctrl+Z) per terminare l'immissione dell'elenco; posponendo
+            invece il carattere '|' alla linea di comando di RAR, l'elenco
+            dei file da comprimere viene fornito dal comando DOS indicato
+            di seguito sulla stessa linea di comando.
+
+            Questa opzione non sostituisce i filtri dei file definiti 
+            dalla linea di comando. Permette di definire degli ulteriori 
+            filtri che limitano i file da processare che hanno passato il 
+            filtro principale definito con l'opzione -n.
+
+            Esempio:
+
+               rar a copia -r -n@lista_inclusioni.txt Progetto Informazioni @elenco_file.txt
+
+            ed il file lista_inclusioni.txt può contenere, ad esempio:
+
+            *.txt
+            *.lst
+
+
+    -oc     Imposta l'eventuale attributo di compressione del sistema di 
+            gestione file NTFS. Solo nella versione per Windows.
+
+            Questa opzione permette di ripristinare l'eventuale attributo 
+            di compressione del sistema di gestione file NTFS durante 
+            l'estrazione dei file. RAR salva sempre gli attributi di 
+            compressione durante la creazione di un archivio ma non li 
+            ripristina a meno che non venga specificata l'opzione -oc.
+
+
+    -oh     Salva i collegamenti reali come collegamenti invece che file.
+
+            Se nei file archiviati ci sono più collegamenti reali NTFS ad
+            un unico file, indicando questa opzione il file verrà
+            memorizzato solo alla prima ricorrenza, mentre per tutte le
+            seguenti verrà memorizzato solo il collegamento al primo file.
+            Quando questi file verranno estratti, verrà creato solo il
+            primo file e tutti gli altri saranno dei collegamenti reali.
+
+            Non dovete eliminare o rinominare il file originale presente 
+            nell'archivio dopo averlo creato in quanto rende impossibile 
+            l'estrazione dei collegamenti reali seguenti. Se modificate il 
+            contenuto del primo file tutti i collegamenti seguenti avranno 
+            lo stesso contenuto modificato dopo l'estrazione. Il comando 
+            d'estrazione deve coinvolgere il primo file perché la 
+            creazione dei collegamenti reali seguenti avvenga con 
+            successo.
+
+            Questa opzione è supportata solo dal formato di archiviazione 
+            RAR 5.0, quindi dovete usare contemporaneamente anche 
+            l'opzione -ma.
+
+
+    -oi[0-4][:<dimensione_minima>]
+            Salva file identici solo come riferimento.
+
+            L'opzione -oi0, o anche -oi-, disabilita la funzione per i 
+            file identici: in questo modo ogni file viene processato come 
+            un singolo file. Può essere utilizzata per sovrapporsi ad un 
+            qualsiasi altro valori dell'opzione -oi definito nella 
+            configurazione di RAR.
+
+            Se viene specificato -oi1, o semplicemente -oi, RAR analizza il 
+            contenuto dei file prima d'eseguire l'archiviazione. Se 
+            individua più file dallo stesso contenuto, viene salvato il 
+            contenuto solo della prima ricorrenza e tutti i file seguenti 
+            vengono salvati solo come riferimento al primo file. Questo 
+            permette d ridurre la dimensione dell'archivio ma comporta 
+            alcune restrizioni all'archivio creato. Non dovete rimuovere o 
+            rinominare dall'archivio il primo file di quelli identici dopo 
+            che l'archivio stesso è stato creato, pena la mancata 
+            estrazione dei file identici seguenti in quanto il riferimento 
+            non ha più valore. Se modificate il contenuto del primo file 
+            tutti i collegamenti seguenti avranno lo stesso contenuto 
+            modificato dopo l'estrazione.  Il comando d'estrazione deve 
+            coinvolgere il primo file perché la creazione dei collegamenti 
+            seguenti avvenga con successo.
+
+            Si raccomanda d'utilizzare l'opzione -oi solo se dovete 
+            comprimere molti file identici, se non avete intenzione di 
+            modificare di seguito il contenuto dell'archivio e se 
+            l'estrazione avverrà nella sua totalità del contenuto.
+            Se la dimensione di tutti i file identici è inferiore alla 
+            dimensione del dizionario di compressione specificato con 
+            l'opzione -md, l'opzione -s offre una soluzione più flessibile 
+            rispetto a -oi.
+
+            L'opzione -oi2 è simile a -oi1 con una sola differenza: 
+            visualizzerà l'elenco dei file individuati come identici prima 
+            d'avviare l'archiviazione.
+
+            Le opzioni -oi3 e -oi4 permettono d'utilizzare RAR per 
+            generare l'elenco dei file identici, senza creare alcun 
+            archivio. Dovete comunque inserire nella linea di comando un 
+            nome di archivio per generare una sintassi corretta, nome che 
+            però verrà ignorato. 
+            Se viene utilizzata l'opzione -oi3 verrà visualizzato il nome 
+            e la dimensione di ogni file identico ed ogni gruppo di file 
+            identico verrà separato da una linea vuota.
+            L'opzione -oi4 visualizza semplicemente il nome del file e 
+            salta il primo file per ogni gruppo di file identici, in 
+            questo modo verranno elencati solo i file duplicati.
+
+            Il valore opzionale <dimensione_minima> permette di definire 
+            la soglia di dimensione minima dei file. I file con dimensione 
+            inferiore a <dimensione_minima> non verranno considerati 
+            durante l'analisi dei file identici. Se questo parametro non è 
+            presente il valore predefinito è di 64 KB. Selezionando un 
+            valore di <dimensione_minima> troppo basso si può incrementare 
+            pesantemente il tempo di archiviazione, tempo impiegato per 
+            individuare i file identici.
+
+            Le opzioni -oi1 e -oi2 sono supportate solo dal formato di 
+            archiviazione RAR 5.0 e per questo dovete utilizzare l'opzione 
+            -ma assieme a loro.
+
+            Esempi:
+
+            1) rar a -oi -ma archivio
+
+               salva il contenuto della cartella corrente, memorizzando i 
+               file identici come riferimenti.
+
+            2) rar a -oi3:1000000 -r nullo c:\foto\*.jpg
+
+               elenca tutti i file duplicati con estensione .jpg e di 
+               dimensione superiore a 1000000 (1 MB) presenti nella 
+               cartella c:\foto e nelle sue sotto-cartelle.
+
+
+    -ol[a]  Gestisce i collegamenti simbolici come collegamenti [percorsi 
+            assoluti]
+
+            Salva i collegamenti simbolici NTFS come collegamenti: in questo 
+            modo non vengono archiviati i relativi contenuti.
+            Nella versione per Windows salva come collegamenti anche i 
+            puntatori simbolici, conosciuti anche come "reparse point".
+            Questi oggetti inseriti nell'archivio verranno ricreati come 
+            collegamenti simbolici o puntatori simbolici al momento della 
+            scompattazione.
+
+            Sono supportati nei formati di archiviazione sia RAR 4.x che 
+            5.0 per Linux e solo per il formato RAR 5.0 per Windows.
+
+            In Windows dovete avere i diritti di amministratore per creare 
+            i collegamenti simbolici all'estrazione.
+
+            Quando si esegue un'archiviazione con l'opzione -ol RAR 
+            aggiunge tutti i collegamenti indipendentemente dalla 
+            destinazione. Durante l'estrazione, per definizione, RAR non 
+            considera: i collegamenti simbolici che puntano esternamente 
+            alla cartella di destinazione, quelli con un percorso assoluto, 
+            quelli con un eccessivo numero di ".." nel collegamento di 
+            destinazione o quelli con dei parametri potenzialmente 
+            dannosi. Potete abilitare l'estrazione di questi collegamenti 
+            utilizzando l'opzione -ola.
+
+            I collegamenti simbolici che puntano a cartelle esterne a 
+            quella di destinazione comportano dei rischi alla sicurezza. 
+            Abilitate la loro estrazione solo se siete sicuri del 
+            contenuto di un archivio, come ad esempio uno proveniente da 
+            una vostra copia di sicurezza.
+
+            I collegamenti considerati sicuri da RAR vengono sempre 
+            estratti, indipendentemente dalla presenza delle opzioni -ol o 
+            -ola.
+
+
+    -oni    Permette l'uso di nomi dei file potenzialmente incompatibili.
+
+            Mentre il sistema di gestione file NTFS permette l'utilizzo di 
+            nomi file con degli spazi o dei punti in coda a questi, molti 
+            programmi per Windows non gestiscono correttamente tali
+            nomi. Se questa opzione non viene specificata, RAR rimuoverà 
+            gli spazi ed i punti posti in coda ad un nome file, se 
+            presenti, durante l'estrazione.
+            Specificando questa opzione tali nomi verranno mantenuti 
+            inalterati.
+
+            Questa opzione è disponibile solo con la versione di RAR per 
+            Windows.
+    
+    
+    -or     Rinomina automaticamente i file estratti se nella cartella di 
+            destinazione esistono già dei file con lo stesso nome. Il nome 
+            dei file così estratti assumerà la forma 'nome_file(N).est' 
+            dove 'nome_file.est' è il nome del file originale e N è un 
+            numero progressivo che inizia da 1.
+
+
+    -os     Salva gli attributi estesi del sistema di gestione file 
+            NTFS. Solo nella versione per Windows.
+
+            Questa opzione ha significato solo per il sistema di gestione
+            file NTFS e permette di memorizzare nell'archivio gli attributi 
+            estesi relativi ad un file.
+            Potete aver bisogno di specificare questa opzione durante 
+            l'archiviazione se utilizzate dei programmi che memorizzano 
+            dati negli attributi estesi e volete preservare tali 
+            informazioni.
+
+            Gli attributi estesi non sono salvati per i file NTFS 
+            cifrati.
+
+
+    -ow     Quando archiviate utilizzate questa opzione per memorizzare le
+            informazioni di sicurezza di un file, e quando estraete per
+            ripristinarle.
+
+            La versione di RAR per Unix salva il proprietario ed il gruppo
+            d'appartenenza di un file quando utilizzi questa opzione.
+
+            La versione per Windows memorizza il proprietario, il gruppo, i
+            permessi e le informazioni d'audit relative ad un file, ma
+            solo se avete i privilegi necessari per leggere queste
+            informazioni. Notate che solo il sistema di gestione file NTFS
+            supporta i dati di sicurezza sotto Windows.
+
+
+    -o[+|-] Imposta la modalità di sovrascrittura. Può essere utilizzato 
+            sia durante l'estrazione che durante l'aggiornamento dei file 
+            archiviati. Sono disponibili le seguenti modalità: 
+
+              -o    Richiede una conferma all'utilizzatore nel caso sia 
+                    necessaria una sovrascrittura dei file (modalità 
+                    predefinita per l'estrazione).
+
+              -o+   Sovrascrive i file già esistenti senza richiedere una 
+                    conferma all'utilizzatore (modalità predefinita per 
+                    l'aggiornamento dei file archiviati).
+
+              -o-   Non sovrascrive i file già esistenti.
+
+
+    -p[parola_chiave]   
+            Imposta la parola chiave [parola_chiave] per cifrare i
+            file durante l'archiviazione o per decifrarli durante
+            l'estrazione. La parola chiave è sensibile al Maiuscolo /
+            minuscolo. La parola chiave può essere lunga al massimo 127 
+            caratteri: parole chiavi più lunghe vengono troncate a questo 
+            valore.
+            Se dimenticate d'indicare nella linea di comando, dopo il
+            parametro -p, la parola chiave, vi verrà chiesta d'immetterla
+            subito dopo tramite il messaggio: "Inserisci la parola chiave
+            (non viene visualizzata in chiaro):". Per passare la parola 
+            chiave se non viene definiti dalla line di comando potete 
+            utilizzare inoltre la redirezione dei file o i "pipe":
+
+            Esempi1:
+
+            1) rar a -pbubu segreto *.txt
+
+               aggiunge tutti i file *.txt all'archivio 'segreto' e li
+               cifra con la parola chiave 'bubu'.
+
+            2) rar -p segreto *.txt < parola_chiave.txt
+
+               aggiunge tutti i file *.txt all'archivio 'segreto' e li
+               cifra con la parola chiave memorizzata nel file 
+               'parola_chiave.txt'.
+
+
+    -p-     Non richiede la parola chiave se prevista.
+    
+            Non richiede all'estrazione la parola chiave se sono presenti 
+            nell'archivio file cifrati.
+            Attualmente potete specificare qualsiasi parola chiave errata 
+            per la richiesta di parola chiave e forzare RAR a visualizzare 
+            il messaggio d'errore "parola chiave errata" durante 
+            l'estrazione di file cifrati.
+            In pratica questa opzione imposta '-' come parola chiave per 
+            l'estrazione.
+
+    
+    -qo[-|+]
+            Aggiungi le informazioni per una apertura veloce 
+            [nessuna|forza].
+
+            Gli archivi RAR memorizzano per ogni file un'intestazione che
+            contiene informazioni come nome, orari, dimensione e attributi,
+            intestazione posta immediatamente prima dei dati del file
+            descritto.
+            Questo approccio è più resistente a possibili danni rispetto 
+            al memorizzare tutte le intestazioni dei file in un unico 
+            blocco continuo in quanto, nel caso di distruzione, totale o 
+            parziale, di questo blocco si perderebbe il contenuto 
+            dell'intero archivio.
+            Ma se questo approccio lo rende più affidabile, le informazioni 
+            dei singoli file sono sparse per l'intero archivio e questo 
+            può rendere più lenta l'apertura di un archivio in un 
+            programma dall'interfaccia grafica come WinRAR.
+
+            Per migliorare la velocità di apertura di un archivio e non 
+            renderlo vulnerabile a seguito del danneggiamento di un 
+            singolo blocco di dati, il formato di archiviazione RAR 5.0 
+            può aggiungere delle informazioni opzionali per un'apertura 
+            veloce. Queste informazioni vengono aggiunte in coda 
+            all'archivio e contengono una copia dei nomi dei file e degli 
+            altri dati, così come sono presenti all'inizio di ogni file 
+            archiviato.
+            Siccome il blocco contiene dei dati sequenziali il contenuto 
+            può essere letto velocemente, senza la necessità di dover 
+            scansionare l'intero archivio.
+            Ogni intestazione di file salvata in questo blocco viene 
+            protetta con una "firma" di integrità (checksum). Se RAR 
+            individua che il dato presente in questo blocco è danneggiato 
+            lo ignora e rileva i dati del file dall'intestazione presente 
+            all'interno dell'archivio: in questo modo la resistenza ai 
+            danneggiamenti non viene diminuita.
+
+            Il blocco per l'apertura veloce contiene una copia completa 
+            dell'intestazione dei file e questa può consistere in decine o 
+            centinaia di byte per file, incrementando della stessa 
+            quantità la dimensione dell'archivio finale. Questo aumento di 
+            dimensione è apprezzabile soprattutto quando sono presenti 
+            nell'archivio molti piccoli file dove la dimensione del file è 
+            quasi comparabile alla dimensione della sua intestazione.
+            Per questo motivo, per definizione, se non viene specificata 
+            l'opzione -qo o se viene specificata senza parametri, RAR 
+            memorizza le copie dell'intestazione dei file nel blocco per 
+            l'apertura veloce solo per file relativamente grandi, mentre 
+            continua ad utilizzare la memorizzazione standard 
+            dell'intestazione file per file di piccole dimensioni.
+            La soglia che discrimina questo comportamento dipende dalla 
+            versione di RAR. Questo approccio fornisce un ragionevole 
+            compromesso per migliorare la velocità d'apertura di un 
+            archivio. Se preferite avere la massima velocità d'apertura di 
+            un archivio ignorando la sua dimensione dovete utilizzare
+            l'opzione -qo+ per copiare le intestazioni di tutti i file. Se
+            invece volete la dimensione minima dell'archivio e non vi
+            importa il tempo d'apertura di questo nei vari programmi,
+            specificate l'opzione -qo- per escludere completamente la copia
+            delle intestazioni dei file.
+
+            Se volete misurare gli effetti sulle prestazioni di questa 
+            opzione assicuratevi che il contenuto dell'archivio non sia 
+            memorizzato in qualche memoria cache del disco. Se per caso 
+            l'archivio viene memorizzato in una memoria cache non viene 
+            effettuato un reale accesso al disco e la lettura delle 
+            intestazioni dei file è sempre veloce anche in assenza della 
+            copia delle intestazioni nel blocco per l'apertura veloce.
+    
+    
+    -r      Considera anche le sotto-cartelle.
+            Abilita la ricorsività delle sotto-cartelle, ovvero oltre alla
+            cartella principale vengono prese in considerazione anche le
+            eventuali sotto-cartelle. Questa opzione può essere utilizzata
+            con i comandi 'a', 'u', 'f', 'm', 'x', 'e', 't', 'p', 'v',
+            'l', 'c', 'cf' e 's'.
+            
+            Quando viene utilizzata con i comandi 'a', 'u', 'f' o 'm', i
+            file presenti nelle sotto-cartelle verranno processati così
+            come quelli della cartella principale.
+
+            Quando viene utilizzata con  i comandi 'x', 'e', 't', 'p', 'v',
+            'l', 'c', 'cf' o 's', gli archivi presenti nelle sotto-cartelle
+            verranno processati così come quello nella cartella corrente.
+
+
+    -r-     Disabilita la ricorsività delle sotto-cartelle.
+
+            Anche senza l'opzione -r RAR abilita la ricorsività 
+            automaticamente in alcune situazioni; l'opzione -r- ne 
+            inibisce l'abilitazione.
+
+            Se specificate un nome di cartella come file da archiviare e 
+            non indicate un filtro di file attraverso l'uso dei caratteri 
+            jolly, per definizione RAR aggiunge anche il contenuto della 
+            cartella stessa e delle sotto-cartelle nonostante non sia 
+            specificato l'opzione -r.
+            Inoltre RAR abilita in automatico la ricorsività se viene 
+            specificato la radice del disco e sempre se non è indicato un 
+            filtro di file. L'opzione -r- disabilita questo comportamento.
+
+            Esempi:
+
+               rar a -r- archivio nome_cartella
+              
+            aggiungerà solo la cartella vuota 'nome_cartella' ed ignorerà 
+            tutto il suo contenuto.
+            
+               rar a -r- archivio c:\
+
+            aggiungerà solo i file presenti della cartella radice c: e non 
+            eseguirà la ricorsione nelle sue sotto-cartelle.
+
+
+    -r0     Considera le sottocartelle solo per nomi che rispondo al filtro
+            specificato. Agisce similmente all'opzione '-r', ma, quando
+            viene utilizzata con i comandi 'a', 'u', 'f' e 'm', ricerca un
+            determinato file nelle sottocartelle solo se la definizione di
+            questo nella linea di comando include i caratteri jolly '*' o
+            '?'. Se la definizione del o dei file da archiviare non
+            contiene i caratteri jolly '*' o '?', questi verranno cercati
+            solo nella cartella corrente.
+
+            Questa opzione opera solo con i nomi di file. I nomi delle 
+            cartelle senza una parte di nome file, come 'nomecartella', 
+            non sono affetti dall'opzione -r0 e i loro contenuti vengono 
+            aggiunti completamente all'archivio a meno che non si 
+            specifichi l'opzione -r-.
+
+            Esempi:
+
+            rar a -r0 documenti.rar *.doc leggimi.txt
+
+            aggiunge nell'archivio documenti.rar i file *.doc presenti 
+            nella cartella corrente e nelle sotto-cartelle, e il file 
+            leggimi.txt solo se presente nella cartella corrente.
+            Se si utilizzava l'opzione -r il file leggimi.txt veniva 
+            cercato anche nelle sotto-cartelle.
+
+
+    -ri<p>[:<t>]
+            Definisce la priorità e il tempo d'attesa. Disponibile solo
+            in RAR per Windows. Questa opzione viene utilizzata per
+            regolare il carico al sistema da parte di RAR in un ambiente
+            multi-processo (multitask). La priorità del processo <p> può
+            assumere i valori da '0' a '15'. 
+            
+            Quando <p> è posto a '0' viene utilizzata la priorità
+            predefinita dal Sistema Operativo; '1' corrisponde alla
+            priorità più bassa e '15' alla più alta.
+            
+            Il tempo d'attesa <t> può assumere un valore da '0' a '1000'
+            millisecondi. Questo definisce il tempo che RAR rimane in
+            attesa dopo un'operazione di lettura o scrittura, dando così
+            la possibilità ad altri processi di funzionare più velocemente.
+            Definire un tempo d'attesa <t> diverso da 0 può essere utile
+            per ridurre il carico al sistema anche se questo è ottenibile 
+            con il parametro <p>.
+
+            Esempio:
+
+            eseguire RAR con la priorità di processo predefinita e con un
+            tempo d'attesa di 10 millisecondi:
+
+               rar a -ri0:10 copia *.*
+
+
+    -rr[N]  Aggiunge i dati utili per un recupero a seguito di
+            danneggiamento dell'archivio. Questa opzione viene utilizzata
+            durante la creazione o la modifica di un archivio per
+            aggiungergli le informazioni per il recupero. Vedi la
+            spiegazione del comando 'rr[N]' per ulteriori informazioni.
+
+
+    -rv[N]  Crea i volumi di ripristino. 
+            Questa opzione viene utilizzata con gli archivi multi-volume
+            per generare uno o [N] volumi di ripristino. Vedi la
+            descrizione del comando 'rv[N]' per ottenere ulteriori
+            dettagli.
+
+
+    -s      Crea un archivio in modalità "solido". Un archivio "solido" è 
+            un archivio compresso utilizzando un metodo speciale che 
+            tratta la maggior parte, o tutti i file da inserire, come 
+            un'entità unica.
+
+            L'archiviazione solida incrementa significativamente il 
+            fattore di compressione soprattutto quando si comprime un 
+            numero alto di piccoli file. Per contro l'aggiornamento di un 
+            archivio solido già esistente è più lento rispetto 
+            all'aggiornamento di archivio non-solido; inoltre accedere ad 
+            un singolo file è un'operazione leggermente più lenta; infine 
+            un archivio solido è leggermente più sensibile ai 
+            danneggiamenti.
+
+            Solitamente i file inseriti in un archivio solido sono 
+            ordinati per estensione ma è possibile disabilitare 
+            l'ordinamento utilizzando l'opzione -ds o impostando un 
+            ordinamento dei file alternativo utilizzando un file speciale, 
+            rarfiles.lst.
+
+            Esempio:
+
+            Creare un archivio solido "sorgenti" con una dimensione di
+            dizionario di compressione pari a 512 Kbyte, prendendo in
+            considerazione tutte le sottocartelle ad inserendo solo i file
+            con estensione *.asm.
+
+               rar a -s -md512 sorgenti *.asm -r
+
+
+    -s<N>   Crea sotto-archivi solidi in gruppi di <N> file.
+
+            Questa opzione applica la compressione in formato solido come
+            per la '-s', ma crea sotto-gruppi di <N> file. Solitamente
+            questa operazione decrementa il rapporto di compressione, ma
+            decrementa pure l'entità della perdita dati in caso di
+            danneggiamento dell'archivio.
+
+
+    -sc<set_caratteri>[<oggetti>]
+            Specifica il set di caratteri.
+
+            Il parametro <set_caratteri> è obbligatorio e può assumere uno 
+            dei seguenti valori:
+
+              U - Unicode UTF-16, a 2 byte;
+              F - Unicode UTF-8, a 1 byte;
+              A - la codifica nativa ad un solo byte, che per la versione 
+                  per Windows è la codifica ANSI;
+              O - codifica OEM (DOS), solo nella versione per Windows.
+
+            L'ordine dei byte relativo ai file UTF-16 passati a WinRAR,
+            come un elenco di file o un commento, viene individuato in base
+            al BOM (Byte Order Mark) posto all'inizio del file stesso. Se
+            ad inizio file non è presente il BOM, viene assunto per
+            definizione un ordine dei byte di tipo "little endian" (prima
+            il byte meno significativo e poi quello più significativo).
+
+            Il parametro <oggetti> è opzionale e può assumere uno dei 
+            seguenti valori:
+
+              C - commento file;
+              G - file di tracciamento prodotti dall'opzione -ilog;
+              L - elenco file;
+              R - messaggi inviati per la redirezione verso file o altri 
+                  dispositivi (solo per Windows).
+
+            È permesso specificare uno od entrambi gli oggetti, come ad 
+            esempio '-scolc'. Se il parametro <oggetto> viene omesso, il 
+            set di caratteri viene applicato a tutti gli oggetti.
+
+            Questa opzione permette di specificare il set di caratteri per 
+            i file definiti con l'opzione -z[file], gli elenchi dei file 
+            ed i file di commento scritti dal comando 'cw'.
+
+            Esempi:
+
+            1) rar a -scol data @elenco
+
+               legge i nomi dei file da archiviare dal file 'elenco' 
+               utilizzando la codifica OEM.
+
+            2) rar c -scuc -zcommento.txt data
+
+               legge il file di commento 'commento.txt' come file in 
+               formato Unicode.
+
+            3) rar cw -scuc data commento.txt
+
+               scrive il file 'commento.txt' come file in formato Unicode.
+
+            4) rar lb -scur dati > lista.txt
+               
+               scrive i nomi dei file presenti nell'archivio dati.rar nel 
+               file di testo lista.txt con il formato Unicode.
+
+
+    -se     Crea sotto-archivi solidi in base all'estensione.
+
+            Questa opzione applica la compressione in formato solido come
+            per la '-s', ma crea sotto-gruppi in base all'estensione,
+            azzerando le statistiche del metodo solido ad ogni cambio
+            estensione. Solitamente questa operazione decrementa il rapporto
+            di compressione, ma decrementa pure l'entità della perdita dati
+            in caso di danneggiamento dell'archivio.
+
+
+    -sfx[nome_modulo]
+            Crea un archivio auto-estraente. 
+            Se viene utilizzata questa opzione per la creazione di un nuovo
+            archivio, verrà creato un archivio auto-estraente (SFX). Per
+            definizione RAR utilizza come modulo auto-estraente il file
+            Default.SFX. Questo file deve essere nella stessa cartella di
+            RAR.EXE, nella versione per Windows, o nella cartella
+            dell'utente, in '/usr/lib' o '/usr/local/lib' nella versione
+            per Unix.
+            È possibile specificare subito dopo l'opzione "-sfx" un modulo
+            auto-estraente alternativo, adatto ad altri Sistemi Operativi
+            oppure con interfaccia e prestazioni personalizzate.
+
+            Esempio:
+
+               rar a -sfxwincon.sfx finale
+
+            crea un archivio auto-estraente 'finale.exe' utilizzando il
+            modulo auto-estraente 'wincon.sfx', per Windows 32bit in
+            modalità carattere.
+
+
+    -si[nome]
+            Legge i dati da comprimere ed archiviare da 'stdin' (standard 
+            input). Il parametro opzionale 'nome' permette di specificare 
+            il nome del file archiviato nel quale sono inseriti i dati 
+            letti da stdin alla creazione. Se questo parametro non viene 
+            indicato, il nome del file sarà 'stdin'. 
+
+            Esempio:
+
+               type leggimi.txt | rar a -siistruzioni.txt istruz_1.rar
+
+            comprimerà la visualizzazione del comando 'type leggimi.txt' 
+            nell'archivio 'istruz_1.rar', chiamando il file 
+            'istruzioni.txt'.
+
+               dir c: /s | rar a -sidisco_c.txt immagini_disco
+
+            comprimerà l'elenco di tutti i file del disco C: 
+            nell'archivio 'immagini_disco.rar', chiamando il file 
+            'disco_c.txt'.
+
+
+    -sl<dimensione>
+            Processa solo quei file la cui dimensione è inferiore a quanto 
+            specificato nel parametro <dimensione>, indicato in byte.
+
+
+    -sm<dimensione>
+            Processa solo quei file la cui dimensione è superiore a quanto 
+            specificato nel parametro <dimensione>, indicato in byte.
+
+
+    -sv     Crea volumi solidi indipendenti
+
+            In modalità predefinita, RAR cerca di azzerare le statistiche 
+            del metodo solido all'inizio del volume seguente, ma solo se 
+            sono stati archiviati alcuni megabyte.
+
+            Questa opzione forza RAR ad ignorare la dimensione 
+            dell'archivio e ad azzerare le statistiche del metodo solido 
+            ad ogni nuovo volume. Solitamente questa operazione decrementa 
+            il rapporto di compressione, ma incrementa le possibilità 
+            d'estrarre parte dei dati se uno dei volumi è stato rovinato o 
+            perso.
+
+            Notate che qualche volta RAR non può azzerare le statistiche 
+            anche se è stata specificata questa opzione. Ad esempio non lo 
+            fa quando comprime un unico file in più volumi. RAR può 
+            azzerare le statistiche solo tra due file separati, non 
+            all'interno di un singolo file.
+
+            L'opzione viene ignorata se si sta creando un archivio non 
+            suddiviso in volumi.
+
+
+    -sv-    Crea volumi solidi dipendenti.
+
+            Questa opzione applica la compressione in formato solido come
+            per la '-s', ma condivide i dati statistici del formato solido
+            tra tutti i vari volumi.
+
+            Nell'operatività predefinita, RAR azzera i dati statistici del
+            formato solido all'inizio di un nuovo volume o appena
+            possibile, mentre questa opzione cambia questo comportamento
+            nella modalità sopra descritta. Tutto ciò porta ad un leggero
+            miglioramento del rapporto di compressione, ma riduce
+            significativamente le possibilità d'estrarre parte dei dati se
+            un volume di un archivio multi-volume viene perso o
+            danneggiato.
+
+            L'opzione viene ignorata se si sta creando un archivio non 
+            suddiviso in volumi.
+
+    
+    -s-     Disabilita l'archiviazione in formato solido.
+
+
+    -t      Verifica i file appena archiviati.
+            Questa opzione è utile soprattutto in combinazione con il
+            comando "Muovi i file": in questo modo i file verranno
+            cancellati solo se la verifica si concluderà con successo.
+
+
+    -ta<data>
+            Processa solo i file modificati dopo (after) una specifica 
+            data. Il formato della data è AAAAMMGGOOMMSS. È permesso
+            inserire separatori come '-' o ':' nella data e omettere le
+            informazioni non necessarie. Ad esempio l'opzione
+            '-ta2001-11-20' è corretta; internamente RAR espanderà la data 
+            in '-ta20011120000000' e la interpreterà come "i file 
+            modificati dopo le ore 0, 0 minuti e 0 secondi del 20 novembre
+            2001".
+
+
+    -tb<data>
+            Processa solo i file modificati prima (before) di una
+            specifica data. Il formato del parametro dell'opzione è uguale
+            a quello per '-ta<data>'.
+
+
+    -tk     Tiene l'orario dell'archivio come l'originale. Previene la
+            modifica dell'orario dell'archivio quando WinRAR vi esegue
+            operazioni di modifica.
+
+
+    -tl     Imposta l'orario dell'archivio a quello del file più recente.
+            Se questa opzione viene utilizzata nella creazione di un
+            archivio, ne imposta l'orario a quello del file più recente
+            da archiviare. Se invece viene utilizzata per un archivio già
+            esistente, forza RAR ad aggiornare l'orario di questo a quello
+            del file archiviato più recente.
+
+
+    -tn<tempo>
+            Processa solo i file più recenti (newer) del periodo di
+            <tempo> specificato. Il formato per la definizione del <tempo>
+            è:
+
+            [<giorni>d][<ore>h][<minuti>m][<secondi>s]
+
+            Per esempio, utilizzate l'opzione '-tn15d' per processare file
+            creati o modificati negli ultimi 15 giorni o '-tn2h30m' per
+            processare file creati o modificati nelle ultime 2 ore e
+            mezza.
+
+
+    -to<tempo>
+            Processa solo i file più vecchi (older) del periodo di
+            <tempo> specificato. Il formato per le definizione del <tempo>
+            è lo stesso dell'opzione '-tn<tempo>'.
+
+
+    -ts[m|c|a][+|-|1]
+            Salva o ripristina gli orari dei file: orari di modifica, 
+            creazione e accesso.
+
+            Utilizzate l'opzione '-tsm' per salvare nell'archivio l'orario 
+            di modifica dei file, '-tsc' per l'orario di creazione e 
+            '-tsa' per quello dell'ultimo accesso. E' possibile indicare 
+            nella linea di comando più opzioni -ts, come '-tsc -tsa'.
+            Se non viene indicato dopo l'opzione '-ts' uno dei suffissi 
+            'm', 'c' o 'a' vengono salvati tutti e tre gli orari.
+
+            Posponete un '+' per memorizzare gli orari dei file con la
+            massima precisione.
+            La massima precisione dipende dal sistema operativo e dal 
+            sistema di gestione file e può andare dai 100 nanosecondi di 
+            Windows ad 1 nanosecondo di Unix.
+            Posponete invece '1' per utilizzare una precisione di solo 1 
+            secondo, oppure '-' per non salvare alcun orario dei file.
+            Se non viene indicato '+', '-' o '1' viene assunto '+', per 
+            questo motivo '-ts' o '-ts+' salvano tutti e 3 gli orari e 
+            alla massima precisione possibile.
+
+            Un archivio in formato RAR 4.x contiene sempre la data di 
+            modifica e con questo formato indicando l'opzione '-tsm-' si 
+            ha comunque il salvataggio della data di modifica con la 
+            precisione di 2 secondi. E' possibile invece disabilitare la 
+            memorizzazione degli altri due orari.
+            Per gli archivi in formato RAR 5.0 come si è già visto è 
+            possibile non memorizzare alcun orario: in questo modo i file 
+            estratti prenderanno l'orario di sistema corrente.
+            Le opzioni '-tsm- -tsc- -tsa-' o semplicemente '-ts-' per 
+            un archivio in formato RAR 4.x salva l'orario di modifica dei 
+            file in bassa precisione mentre per un archivio in formato RAR 
+            5.0 non salverà alcun orario.
+
+            Se non viene specificata l'opzione '-ts', RAR memorizzerà solo 
+            l'orario di modifica in alta precisione del file omettendo gli 
+            altri orari.
+
+            È necessario specificare le opzioni '-tsc' e '-tsa' perché 
+            vengano applicati ai file estratti gli orari archiviati di
+            creazione e di ultimo accesso. Per definizione RAR imposta solo
+            l'orario di modifica, anche se sono memorizzati nell'archivio
+            gli orari di creazione e di ultimo accesso.
+            Utilizzate le opzioni '-tsm-' o '-ts-' per impostare ai file 
+            estratti l'orario di sistema invece di quello memorizzato 
+            nell'archivio.
+            
+            Windows permette di impostare tutti e tre gli orari dei file
+            durante la scompattazione. In Unix si possono impostare gli
+            orari di modifica e di ultimo accesso ma non quello di 
+            creazione.
+
+            Esempi:
+
+            1) rar a -ts copia
+
+               memorizza tutti i file con tutti i tipi di orari possibili 
+               e con la massima precisione.
+
+            2) rar x -tsa copia
+
+               ripristina, nei file estratti, gli orari di modifica e di 
+               ultimo accesso.  L'opzione '-tsm' non è richiesta in quanto 
+               RAR la considera in modo predefinito.
+               Se si vuole ripristinare solo l'orario di ultimo accesso 
+               occorre definire le opzioni '-tsm- -tsa'.
+
+            3) rar a -tsm1 -tsc1 copia
+
+               Memorizza l'orario di modifica e di creazione con una 
+               precisione bassa.
+
+       
+    -u      Aggiorna i file di un archivio ed aggiunge gli eventuali
+            nuovi. Questa opzione può essere usata per operazione di
+            estrazione o creazione. Per l'archiviazione, la porzione delle
+            linea di comando 'a -u' è equivalente al comando 'u'. Potete
+            utilizzare l'opzione '-u' anche con il comando 'm' o 'mf'. Se
+            l'opzione '-u' viene utilizzata con i comandi 'x' o 'e', i
+            file più vecchi verranno sostituiti da quelli nuovi estratti
+            dall'archivio ma, diversamente dall'opzione '-f', se un file
+            archiviato non trova riscontro come nome tra quelli non
+            compressi, verrà comunque estratto.
+
+
+    -v      Crea gli archivi multi-volume autodeterminandone la dimensione 
+            o esegue un elenco di tutti i volumi dell'archivio.
+
+            Questa opzione può essere utilizzata sia durante la creazione 
+            di un archivio multi-volume sia nella visualizzazione del 
+            contenuto di un volume.
+
+            Nel primo caso abilita l'autodeterminazione della dimensione 
+            dei singoli volumi, in modo che ogni nuovo volume utilizzi 
+            tutto lo spazio disponibile sul dispositivo di destinazione. 
+            Questo è utile se si creano dei volumi su dei dischi 
+            rimovibili. Potete trovare ulteriori informazioni nella 
+            descrizione dell'opzione '-v<dimensione>' posta in seguito.
+
+            Nel secondo caso, quando questa opzione viene indicata assieme 
+            ai comandi 'V' o 'L', forza RAR ad elencare i contenuti di 
+            tutti i volumi partendo da quello specificato nella linea di 
+            comando. Senza questa opzione RAR visualizza il contenuto solo 
+            del volume specificato. 
+    
+    
+    -v<dimensione>[k|b|f|m|M|g|G]
+            Con questa opzione è possibile creare archivi multi-volume,
+            dove ogni volume può avere una dimensione massima
+            =<n>*1.000 [*1.024 | *1].
+            Per definizione il parametro <n> viene espresso in migliaia
+            (1.000) di byte (non 1.024 di byte). Potete inoltre
+            esprimerlo in kilobyte posponendo il simbolo 'k', in byte
+            posponendo il simbolo 'b', in megabyte posponendo il simbolo
+            'm', in milioni (1.000.000) di byte (non 1.024.000)
+            posponendo il simbolo 'M', in gigabyte posponendo il simbolo 
+            'g', miliardi di byte (1.000.000.000) posponendo il simbolo 
+            'G' o selezionarlo da uno dei vari valori predefiniti
+            posponendo il valore numerico ed il simbolo 'f'. I valori
+            predefiniti sono 360, 720, 1200, 1440 o 2880 e stanno ad
+            indicare i rispettivi formati dei dischetti (floppy disk). 
+            
+            Se la dimensione viene omessa, viene auto-determinata in base 
+            allo spazio disponibile sul dispositivo di destinazione.
+
+            Potete inserire delle frazioni decimali utilizzando il punto 
+            (.) come delimitatore dei decimali (al posto della virgola). 
+            Ad esempio -v1.5g significa 1,5 gigabyte.
+
+            Potete specificare più opzioni -v per dichiarare delle 
+            dimensioni diverse dei vari volumi. Ad esempio:
+
+               rar a -v100k -v200k -v300k nome_archivio
+
+            creerà un primo volume di 100 KB, un secondo di 200 KB e tutti 
+            i seguenti di 300 KB.
+
+            Se i volumi vengono creati temporaneamente su di un disco
+            diverso da quello di destinazione (il corrente o quello
+            eventualmente definito con il parametro '-w'), la funzione di
+            autodeterminazione non ha più senso ed in questo caso la
+            dimensione del volume deve essere obbligatoriamente specificata.
+
+            Se i volumi vengono creati su dispositivi rimovibili,
+            dischetti, ZIP, ecc., dopo la creazione del primo volume vi
+            viene presentata la richiesta seguente:
+
+               Creare il volume seguente?  Si/No/Tutti
+
+            In questo momento potete cambiare il disco. Se premete il tasto
+            'T' di "Tutti", tutti i volumi verranno creati senza alcuna
+            pausa tra uno e l'altro.
+
+            Per definizione RAR assegna ai volumi un nome del tipo 
+            '<nome_volume>.partNNN.rar', dove NNN sta ad indicare il 
+            progressivo del volume. Per il formato di archiviazione RAR 
+            4.x indicando l'opzione '-vn' è possibile utilizzare il 
+            vecchio schema di assegnazione dei nomi ai volumi, dove il 
+            primo volume della serie ha l'estensione .RAR mentre i volumi 
+            seguenti sono numerati da .R00 a .R99.
+            Il formato di archiviazione RAR 5.0 non supporta l'opzione -vn 
+            e i relativi nomi basati sull'estensione.
+
+            Quando estraete o verificate un archivio multi-volume, dovete
+            eseguire il comando solo sul primo volume. Se sul dispositivo
+            corrente non c'è il volume seguente, vi viene presentata la
+            richiesta seguente:
+
+               Inserire il disco con <nome_volume_seguente>
+
+            Inserite il disco con il volume seguente e premete qualsiasi
+            tasto.
+
+            Se durante l'estrazione il volume seguente non viene trovato,
+            RAR interrompe il processo riportando l'errore:
+
+               Impossibile trovare il volume <nome_volume_seguente>.
+
+            Gli archivi multi-volume non possono essere modificati: i
+            comandi 'd', 'f', 'u' e 's' non possono essere utilizzati con
+            questi archivi. Il comando 'a' può essere usato solo per la
+            creazione di nuovi archivi multi-volume.
+
+            È anche possibile, benché improbabile, che la dimensione di un
+            file "compresso" in un archivio multi-volume sia superiore a
+            quella del file non compresso. Questo è dovuto al fatto che
+            l'eventuale "memorizzazione" di un file, ovvero l'aggiunta
+            all'archivio senza comprimerlo nel caso in cui la compressione
+            ne aumenti la dimensione, non può essere utilizzata in un
+            archivio multi-volume.
+
+            Gli archivi multi-volume possono essere in formato solido e/o
+            auto-estraenti.
+
+            Esempio:
+
+            creare un archivio solido multi-volume con una dimensione di
+            1.440.000 byte:
+
+               rar a -s -v1440 immagine *.*
+
+
+    -vd     Cancella il contenuto del disco prima di creare l'archivio.
+
+            Con questa opzione tutti i file e le cartelle presenti sul
+            disco di destinazione verranno eliminate prima d'iniziare
+            l'operazione d'archiviazione. Se create un archivio
+            multi-volume, la cancellazione verrà eseguita prima della
+            creazione di ogni volume, in modo da darvi la possibilità di
+            utilizzare, per l'archiviazione, dei dischi rimovibili non
+            vuoti. Dovete però assicurarvi che i dischi non contengano
+            informazioni importanti.
+            Questa opzione può essere applicata solo su dispositivi
+            rimovibili: i dischi rigidi non possono essere cancellati con
+            essa.
+
+
+    -ver[n] Controllo versione file
+
+            Durante l'aggiornamento di un archivio, specificando questa 
+            opzione RAR manterrà le vecchie versioni dei file che stanno 
+            per essere inseriti. Le vecchie versioni vengono rinominate
+            in "nome_file;n" dove 'n' è il progressivo della versione, 
+            partendo da 1.
+
+            Per definizione, quando si estraggono i file da un archivio 
+            senza specificare l'opzione '-ver', RAR estrae solo le ultime 
+            versioni dei file, ovvero quelle che non hanno il suffisso 
+            con il progressivo della versione. Ma se specificate il nome 
+            del file in maniera esatta, includendo il numero della 
+            versione, potete estrarre direttamente un file di una versione 
+            precedente. Ad esempio, 'rar x copia documento.txt;5' estrarrà 
+            dall'archivio 'copia.rar' il file 'documento.txt;5', sempre 
+            che esista.
+
+            Se specificate il parametro '-ver' alla scompattazione senza 
+            alcun parametro, RAR estrarrà tutte le versioni dei file 
+            i cui nomi rispondo alla maschera dei file da estrarre. In 
+            questo caso il numero appeso al nome del file che indica la 
+            versione non verrà tolto.
+            Potete inoltre estrarre un file di una determinata versione 
+            indicandone il numero dopo l'opzione '-ver'. Il nome del file 
+            così estratto sarà quello originale, senza il numero della 
+            versione. Ad esempio, il comando 'rar x -ver5 copia' estrarrà 
+            solo i file della quinta versione.
+
+            Se specificate 'n' nell'opzione, questo valore limiterà il 
+            massimo numero di versioni dei file inserite nell'archivio. 
+            Le versioni dei file che eccedono questa soglia verranno 
+            rimosse.
+
+
+    -vn     Utilizza il vecchio stile di assegnazione dei nomi ai volumi.
+
+            Per definizione RAR assegna ai volumi un nome del tipo 
+            '<nome_volume>.partNNN.rar', dove NNN sta ad indicare il 
+            progressivo del volume. Per il formato di archiviazione RAR 
+            4.x indicando l'opzione '-vn' è possibile utilizzare il 
+            vecchio schema di assegnazione dei nomi ai volumi, dove il 
+            primo volume della serie ha l'estensione .RAR mentre i volumi 
+            seguenti sono numerati da .R00 a .R99.
+            Il formato di archiviazione RAR 5.0 non supporta l'opzione -vn 
+            e i relativi nomi basati sull'estensione.
+
+            Questa opzione può essere utile se pensate di scompattare 
+            l'archivio in una versione di MS-DOS non recente o in modalità 
+            provvisoria, dove non è previsto il nome di file con due '.'.
+    
+    
+    -vp     Introduce una pausa prima di ogni volume seguente.
+
+            Per definizione, RAR chiede la conferma a procedere prima di 
+            creare o di decomprimere il volume seguente SOLO se si sta 
+            operando su dispositivi rimovibili (dischi-rigidi esterni, 
+            floppy, magneto-ottici, ecc.) e se lo spazio disponibile su 
+            questi dispositivi è inferiore alla dimensione del volume da 
+            creare. Questa opzione forza RAR a chiedere sempre la conferma 
+            a procedere. Può essere utile se lo spazio sul disco è 
+            limitato e volete copiare ogni singolo volume su un altro 
+            dispositivo immediatamente dopo la sua creazione.
+
+
+    -w<c>   Definisce la cartella <c> come quella di lavoro. Questa
+            cartella verrà utilizzata per crearvici i file temporanei.
+            Può essere utile definire una cartella su disco rigido se si
+            lavora con i dischetti, oppure una RAM-disk, un disco virtuale 
+            creato utilizzando la più veloce memoria del sistema.
+            La cartella indicata da questa opzione viene comunque 
+            utilizzata solo per l'aggiornamento di archivi già esistenti e 
+            non per la creazione di nuovi.
+
+
+    -x<file/cartella>
+            Il file o la cartella specificati di seguito a questa opzione 
+            verranno esclusi dall'operazione richiesta. Si possono 
+            utilizzare i caratteri jolly '?' e '*' per definire dei 
+            filtri, inserendoli sia al posto del nome del file o della 
+            cartella sia dal lato del percorso. Potete inoltre inserire 
+            più volte l'opzione -x nella linea di comando.
+
+            Se il filtro contiene i caratteri jolly, questo viene 
+            applicato alla cartella corrente e alle relative 
+            sotto-cartelle. Il filtro non è ricorsivo se non contiene 
+            caratteri jolly, quindi il filtro "nomefile" escluderà il file 
+            'nomefile' solo dalla cartella corrente durante 
+            l'archiviazione, oppure lo escluderà solo dalla cartella 
+            principale di un archivio durante l'estrazione.
+
+            Utilizzate il filtro "*\nomefile" per escludere il file 
+            'nomefile' ricorsivamente anche in tutte le sotto-cartelle.
+
+            Se conoscete il percorso esatto del file, potete usare la 
+            sintassi "percorso\nomefile" per escludere solo questa
+            specifica copia di "nomefile". Se usate la sintassi 
+            "-xpercorso\nomefile" durante la scompattazione di un 
+            archivio, "percorso" deve essere un percorso presente 
+            all'interno dell'archivio, non il percorso di un file su disco 
+            dopo che è stato estratto.
+
+            Per definizione le maschere che contengono i caratteri jolly 
+            sono applicati solo ai file. Se avete bisogno di definire un 
+            filtro con i caratteri jolly per escludere più cartelle 
+            occorre utilizzare una sintassi particolare.
+            Questi filtri devono terminare con il separatore di percorsi 
+            ('\' per Windows e '/' per Unix). Ad esempio il filtro 
+            "*tmp*\" escluderà tutte le cartelle che rientrano nel filtro 
+            "*tmp*", mentre "*\tmp\" escluderà tutte le cartelle "tmp". 
+            Sino a che nel filtro sono presenti dei caratteri jolly, 
+            questo verrà applicato sia al contenuto della cartelle 
+            corrente così come alle sue sotto-cartelle.
+
+            Se volete escludere solo una cartella, specificate il nome 
+            esatto della cartella compreso il percorso assoluto o relativo 
+            senza caratteri jolly. In questo caso non dovete appendere il 
+            separatore di percorsi al filtro in quanto è richiesto solo 
+            per quei filtri d'esclusione cartelle che comprendo dei 
+            caratteri jolly, in modo da poterli distinguere dai filtri di 
+            esclusione file.
+
+            Esempi:
+
+            1) rar a -r -x*.bak -x*.rar copia
+
+               verranno compressi nell'archivio 'copia' tutti i file 
+               presenti nella cartella corrente e in tutte le 
+               sotto-cartelle, tranne quelli con estensione 'bak' e 'rar';
+
+            2) rar a -r -x*\temp\ copia_disco_c c:\*
+
+               aggiungo all'archivio 'copia_disco_c' tutti i file del disco C: 
+               escluse le cartelle 'temp' ed i relativi contenuti;
+
+            3) rar x documenti -x*.txt
+
+               estraggo dall'archivio documenti.rar tutti i file meno 
+               quelli con estensione .txt.
+
+
+    -x@<file_elenco>
+            Esclude i file specificati in un elenco a file.
+            Come per l'opzione '-x' solo che il o i file da escludere
+            devono essere definiti nel file "<file_elenco>". Qui ad ogni
+            nome di file, che può contenere anche i caratteri jolly, deve
+            corrispondere una linea.
+
+            Esempio:
+
+            Aggiungere tutti i file *.exe nell'archivio 'eseguibili'
+            tranne quelli elencati nel file lista.txt:
+
+               rar a eseguibili *.exe -x@lista.txt
+
+            Se indicate l'opzione -x@ senza alcun parametro, leggerà
+            l'elenco dei file dal dispositivo "stdin". Per Windows 'stdin',
+            in assenza di altri parametri, corrisponde a digitare le
+            maschere dei file, premendo 'Invio' tra una linea ed un'altra e
+            ^Z (Ctrl+Z) per chiudere l'elenco; posponendo invece il
+            carattere '|' alla linea di comando di RAR, l'elenco dei file da
+            escludere viene fornito dal comando DOS indicato di seguito
+            sulla stessa linea di comando.
+
+
+    -y      Assume Si a tutte le richieste.
+            Se questa opzione viene specificata, "Sì" sarà preso come
+            risposta automatica a tutte le richieste in cui è una delle
+            opzioni, ad esempio nel caso di sovrascrittura di un file già
+            esistente.
+
+
+    -z[<nome_file>]
+            Legge il commento dell'archivio dal file <nome_file>. 
+
+            Questa opzione può essere utilizzata con un qualsiasi comando
+            di modifica archivio per leggere il commento da un file ed 
+            inserirlo nell'archivio stesso.
+            Utilizzate l'opzione '-sc' se dovete specificare il set di 
+            caratteri per il file di commento.
+                        
+            Esempio:
+
+            Aggiungere tutti i file dalla cartella corrente nell'archivio
+            di tipo solido con nome "Immagini" aggiungendogli il commento 
+            inserito nel file "Immagini.Diz":
+
+               rar a -s -zimmagini.diz immagini
+
+            Se il nome del file non viene specificato, il commento viene
+            preso dal dispositivo "stdin".
+            Per Windows 'stdin', in assenza di altri parametri, corrisponde
+            a digitare il commento dalla tastiera. Per questo una volta
+            eseguito il comando, vi verrà posta la seguente richiesta:
+            "Lettura commento da tastiera (stdin)" Dopo di che va inserito
+            il commento; premere "Invio" per terminare l'inserimento.
+
+
+ Limitazioni
+ ~~~~~~~~~~~
+
+    Limitazioni dei comandi:
+
+     - I comandi 'd','u','f','c','cf' non possono operare sugli archivi 
+       suddivisi in volumi.
+
+     - Il comando 'a' non può essere usato per aggiornare un archivio 
+       suddiviso in volumi, solo per crearlo.
+
+
+ Codici d'uscita
+ ~~~~~~~~~~~~~~~
+
+    RAR termina restituendo il codice zero (0) in caso di operazione 
+    conclusasi con successo. Un codice d'uscita superiore a zero significa 
+    che l'operazione è stata interrotta da uno dei seguenti errori:
+
+    Codice  Descrizione
+
+       0    Operazione conclusasi con successo.
+       1    Rilevato uno o più errori non fatali.
+       2    Rilevato un errore fatale.
+       3    Rilevato un errore nel controllo dell'integrità.
+            I dati sono danneggiati.
+       4    Tentativo di modificare un archivio precedentemente bloccato 
+            con il comando 'k'.
+       5    Errore scrittura su disco.
+       6    Errore apertura file.
+       7    Errore nelle opzioni da linea di comando.
+       8    Memoria insufficiente per l'operazione.
+       9    Errore nella creazione di un file.
+      10    Nessun file risponde alla maschera o alle opzioni specificate.
+     255    L'utente ha interrotto il processo.
+
+
+ Glossario
+ ~~~~~~~~~
+
+    Archivio            Un file speciale contenente uno o più file 
+                        opzionalmente compressi e/o cifrati.
+
+    Compressione        Un metodo di codifica per ridurre la dimensione di 
+                        un file.
+
+    Somma di controllo  Valore calcolato per un blocco di dati o per un 
+                        file che permette d'effettuare controlli sui dati 
+                        o verifiche d'integrità.
+
+    Archivio SFX        (SelF-eXtracting) Archivio autoestraente composto 
+                        da un modulo auto-estraente seguito dai dati 
+                        compressi. Non necessita d'avere un programma 
+                        esterno per estrarre i file contenuti al suo 
+                        interno.
+
+    Solido              Un archivio compresso utilizzando un metodo 
+                        speciale che tratta tutti i file da inserire come 
+                        un'entità unica. Particolarmente vantaggioso 
+                        quando si comprime un numero alto di piccoli file.
+
+    Volume              Parte di un archivio suddiviso in più blocchi. 
+                        Suddividere un archivio in più parti permette di 
+                        memorizzarlo su dischi rimovibili quando la sua 
+                        dimensione supera lo spazio disponibile. I volumi 
+                        solidi devono obbligatoriamente essere estratti 
+                        partendo dal primo volume della sequenza.
+
+
+ Diritti d'autore
+ ~~~~~~~~~~~~~~~~
+
+    (c) 1993-2017 Alexander Roshal

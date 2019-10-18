@@ -1,0 +1,112 @@
+
+                          WinRAR in italiano
+                          ~~~~~~~~~~~~~~~~~~
+
+                     versione 5.50 - 16 agosto 2017
+   
+                      2000-2017 - Andrea Baitelli
+
+
+  PREMESSA
+  --------
+  Con questa traduzione si vuol dare maggiore diffusione al programma
+  WinRAR, un ottimo gestore di archivi che introduce soprattutto il
+  formato RAR, il migliore in assoluto come fattore di compressione.
+
+     
+  SITI DI SUPPORTO
+  ----------------
+  L'ultima versione di WinRAR in italiano la potete trovare sul sito del 
+  distributore locale: www.winrar.it.
+  Ricordiamo che il sito internazionale dell'autore, dove potete trovare 
+  la versione originale in inglese e le versioni in altre lingue, è: 
+  www.rarlab.com.
+
+
+  NOTE SULLA TRADUZIONE
+  ---------------------
+  Nel tradurre la guida in italiano sono state fatte alcune scelte sui
+  termini da mantenere nella forma originaria in inglese e su quelli invece
+  da sostituire con vocaboli simili in italiano.
+ 
+  Da Windows 95 in poi Microsoft Italia ha tentato di introdurre alcuni
+  termini in italiano in sostituzione di quelli utilizzati in precedenza in
+  inglese. Un esempio su tutti il termine "cartella" in sostituzione di
+  directory.
+  
+  Si è voluto mantenere questa linea tentando di ampliarla, non per un
+  estremo purismo ma semplicemente per rendere più fluido l'uso
+  dell'interfaccia e la lettura della guida. Se ritenete che alcuni termini
+  siano utilizzati in maniera impropria fatelo sapere.
+
+
+  AGGIORNAMENTO E SUPPORTO
+  ------------------------
+  Sicuramente è stato commesso qualche errore :-) sia di scrittura che
+  "concettuale": siete pregati di segnalarli all'indirizzo sotto riportato
+  in modo da includere le correzioni in una prossima versione.
+
+  Potete contattare il traduttore, Andrea Baitelli, all'indirizzo:
+  andrea<a_commerciale>baitelli.it (sostituite <a_commerciale> con @).
+
+  Per quanto riguarda il supporto in italiano del programma, potete 
+  scrivere una email a supporto<a_commerciale>rarshop.net (sostituite 
+  <a_commerciale> con @). Questo servizio è riservato ai soli utenti 
+  registrati presso il sito di supporto italiano.
+
+
+  GARANZIE
+  --------
+  Pur avendo posto molta cura nell'effettuare questa traduzione, non si
+  garantisce sia esente da errori.
+  Pertanto né il curatore della traduzione né alcun sito di supporto si
+  assumono alcuna responsabilità per perdite di dati o altri danni derivati
+  da una mal interpretazione dei comandi e delle operazioni di WinRAR.
+  Se non accettate questa condizione siete pregati di astenervi dall'uso
+  di WinRAR in Italiano.
+
+
+  RICONOSCIMENTI
+  --------------
+  I miei ringraziamenti alle seguenti persone, rigorosamente in ordine
+  alfabetico, per le segnalazioni su anomalie e consigli in merito alla
+  traduzione:
+  "Ervis", Gino Cerutti, Giovanni Rossi, Giuliano Artico, Giuseppe 
+  Nuzzaci, "MasviL", Maurizio Tirelli, "MetalDibo" e Sandro Pantalone.
+
+ 
+  NOVITÀ RISPETTO ALLA VERSIONE PRECEDENTE
+  ----------------------------------------
+  (- correzioni anomalie, + aggiunte, * modifiche, # note)
+    
+  5.50 - 16 agosto 2017
+   * Adeguata la traduzione alla versione 5.50.
+
+  5.40 - 16 agosto 2016
+   * Adeguata la traduzione alla versione 5.40.
+
+  5.31 - 4 febbraio 2016
+   * Adeguata la traduzione alla versione 5.31.
+
+  5.30 - 1 dicembre 2015
+   * Adeguata la traduzione alla versione 5.30.
+
+  5.21 - 17 febbraio 2015
+   * Adeguata la traduzione alla versione 5.21.
+
+  5.20 - 2 dicembre 2014
+   * Adeguata la traduzione alla versione 5.20.
+
+  5.11 - 2 settembre 2014
+   * Adeguata la traduzione alla versione 5.11.
+
+  5.10 - 15 giugno 2014
+   * Adeguata la traduzione alla versione 5.10.
+   * Modificato tutte le parole cripto... e critto... in sinonimi di 
+     "cifratura".
+
+  5.01 - 7 dicembre 2013
+   * Adeguata la traduzione alla versione 5.01.
+
+  5.00 - 9 settembre 2013
+   * Adeguata la traduzione alla versione 5.00.

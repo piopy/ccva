@@ -76,6 +76,15 @@ namespace MRJoiner.utility
 
             File.WriteAllBytes(path, decrypted_bytes);
             //Console.WriteLine("Decryption Successful");
+            try
+            {
+                File.Delete(source);
+            }
+
+            catch (Exception e3)
+            {
+                Console.WriteLine("Exception caught: {0}", e3);
+            }
             return true;
         }
 

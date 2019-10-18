@@ -16,3 +16,13 @@ E:\GitHub\ccva\MRJoiner\obj\Debug\ccva.csprojResolveAssemblyReference.cache
 E:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.MainForm.resources
 E:\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.Properties.Resources.resources
 E:\GitHub\ccva\MRJoiner\obj\Debug\ccva.csproj.GenerateResource.Cache
+C:\Users\anton\Documents\GitHub\ccva\MRJoiner\bin\Debug\ccva.exe.config
+C:\Users\anton\Documents\GitHub\ccva\MRJoiner\bin\Debug\ccva.exe
+C:\Users\anton\Documents\GitHub\ccva\MRJoiner\bin\Debug\ccva.pdb
+C:\Users\anton\Documents\GitHub\ccva\MRJoiner\obj\Debug\ccva.csprojAssemblyReference.cache
+C:\Users\anton\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.MainForm.resources
+C:\Users\anton\Documents\GitHub\ccva\MRJoiner\obj\Debug\MRJoiner.Properties.Resources.resources
+C:\Users\anton\Documents\GitHub\ccva\MRJoiner\obj\Debug\ccva.csproj.GenerateResource.cache
+C:\Users\anton\Documents\GitHub\ccva\MRJoiner\obj\Debug\ccva.csproj.CoreCompileInputs.cache
+C:\Users\anton\Documents\GitHub\ccva\MRJoiner\obj\Debug\ccva.exe
+C:\Users\anton\Documents\GitHub\ccva\MRJoiner\obj\Debug\ccva.pdb

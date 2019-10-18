@@ -1,0 +1,32 @@
+Default.SFX                  Modulo auto-estraente RAR in modalit… grafica per Win a 32 bit
+Default_compresso.SFX        Modulo auto-estraente RAR in modalit… grafica per Win a 32 bit - compresso
+Default64.SFX                Modulo auto-estraente RAR in modalit… grafica per Win a 64 bit
+Descript.ion                 Il file contenente queste descrizioni
+Leggimi.Txt                  Informazioni su WinRAR
+Leggimi_1a.Txt               Informazioni sulla versione in Italiano di WinRAR
+Licenza.Txt                  Licenza d'uso e di distribuzione
+Novit….Txt                   Novit… di questa versione
+Ordina.htm                    Informazioni per ordinare la versione registrata di WinRAR
+Rar.exe                      Programma RAR in modalit… carattere
+rar.log                      Tracciato degli errori di WinRAR
+Rar.Txt                      Manuale di RAR in modalit… carattere
+RarExt.dll                   Estensione di WinRAR per "Esplora risorse" di Windows
+RarExt32.dll                 Estensione di WinRAR per "Esplora risorse" di Windows a 32 bit
+RarExt64.dll                 Estensione di WinRAR per "Esplora risorse" di Windows a 64 bit
+RarFiles.Lst                 Definizione ordine di archiviazione files per gli archivi solidi
+rarreg.key                   Chiave di registrazione di RAR/WinRAR
+Uninstall.Exe                Programma di disinstallazione
+Uninstall.Lst                Elenco files da rimuovere in caso di disinstallazione
+UnRAR.Exe                    Programma per estrarre da archivi RAR - distribuzione libera
+WinCon.SFX                   Modulo auto-estraente RAR in modalit… carattere per Win a 32 bit
+WinCon_compresso.SFX         Modulo auto-estraente RAR in modalit… carattere per Win a 32 bit - compresso
+WinCon64.SFX                 Modulo auto-estraente RAR in modalit… carattere per Win a 64 bit
+WinRAR.chm                   Guida in linea di WinRAR
+WinRAR.exe                   Programma WinRAR in modalit… grafica
+Zip.SFX                      Modulo auto-estraente ZIP in modalit… grafica per Win a 32 bit
+Zip_compresso.SFX            Modulo auto-estraente ZIP in modalit… carattere per Win a 32 bit - compresso
+Zip64.SFX                    Modulo auto-estraente ZIP in modalit… carattere per Win a 64 bit
+Ordin.htm                    Informazioni per ordinare la versione registrata di WinRAR
+7zxa.dll                     Libreria dinamica per la gestione di archivi in formato 7zip
+UNACEV2.DLL                  Libreria dinamica per la gestione di archivi in formato ACE2
+ace32loader.exe              Caricatore per Windows 64 bit per la libreria dinamica per la gestione di archivi in formato ACE2

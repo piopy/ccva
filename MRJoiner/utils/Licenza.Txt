@@ -1,0 +1,148 @@
+
+   ACCORDO DI LICENZA PER L'UTENTE FINALE
+
+   Il seguente accordo che riguarda il programma d'archiviazione RAR (e la 
+   sua versione per Windows - WinRAR) - riferito come "programma" - viene 
+   stipulato tra "win.rar GmbH" - riferito come "licenziatario" - e 
+   chiunque installi, acceda o in qualsiasi modo lo utilizzi - riferito 
+   come "utente".
+
+   1. L'autore e proprietario dei diritti d'autore sul programma è 
+      Alexander L. Roshal. Il licenziatario e come tale distributore delle 
+      licenze e detentore dell'esclusiva mondiale dei diritti di utilizzo 
+      inclusi i diritti a riprodurre, distribuire e rendere il programma 
+      disponibile al pubblico in ogni sua forma è win.rar GmbH, 
+      Marienstr. 12, 10117 Berlino, Germania.
+
+   2. Il programma è distribuito secondo la formula "prova prima di 
+      comprare". Questo significa che chiunque può utilizzare il
+      programma per un periodo di prova di 40 giorni. Passato questo
+      periodo, se l'utente vuole continuare ad utilizzare il programma, 
+      deve acquistare una licenza.
+
+   3. La versione di prova del programma può essere liberamente 
+      ridistribuita, salvo le eccezioni di seguito indicate, avendo cura 
+      che il pacchetto di distribuzione originale non sia stato 
+      modificato.
+
+      a. Nessuno può distribuire parti separate del pacchetto di 
+         distribuzione originale ad eccezione del file UnRar.Exe senza 
+         un'autorizzazione scritta.
+
+      b. La versione di prova del programma non può essere distribuita 
+         all'interno di altri pacchetti software senza un'autorizzazione 
+         scritta.
+         Il programma deve rimanere nel file d'installazione originale 
+         senza alcuna modifica e deve essere disponibile al prelievo 
+         (download) senza alcuna limitazione o condizione verso l'utente, 
+         come la richiesta di pagamento per il prelievo o il rendere il 
+         prelievo condizionato alla raccolta dei dati dell'utente.
+
+      c. Il file d'installazione di WinRAR, non modificato, deve essere 
+         fornito non appaiato ad altro. Qualsiasi associazione ad altri 
+         programmi è interdetta. In particolar modo l'uso di ogni 
+         programma d'installazione o prelievo il quale fornisca qualsiasi 
+         forma di prelievo associato ad altro programma è proibito salvo 
+         autorizzazione scritta di win.rar GmbH.
+
+      d. Non devono essere inclusi nel pacchetto di distribuzione programmi 
+         illegali di sprotezione, chiavi o generatori di chiavi, ne 
+         riferimenti al distributore della versione di prova.
+
+      e. In caso di violazioni delle precedenti condizioni 
+         l'autorizzazione decade immediatamente e automaticamente.
+
+   4. La versione di prova del programma può visualizzare una finestra di 
+      promemoria alla registrazione. A seconda della versione del programma
+      e dalla configurazione questa finestra può contenere un testo
+      predefinito e collegamenti caricati localmente, oppure una pagina web
+      caricata da Internet. Queste pagine web possono contenere le
+      istruzioni di licenza ed altro materiale in accordo con le scelte di
+      win.rar GmbH, compresa della pubblicità. Quando aprite queste pagine,
+      il programma trasferisce solo i parametri tecnici strettamente
+      necessari per l'apertura di una pagina web in un browser HTTP.
+
+   5. Il programma è distribuito "com'è". Nessuna garanzia di ogni tipo è 
+      espressa o implicita. Utilizzate il programma a vostro rischio. Ne
+      l'autore, il licenziatario ne i rivenditori saranno responsabili di
+      eventuali perdite di dati, danneggiamenti, perdita di profitti o
+      altro tipo di perdita durante l'uso o il mal utilizzo di questo
+      programma.
+
+   6. Sono previste 2 tipi di licenze base per il programma. Queste sono:
+
+      a. Licenza d'utilizzo su di un singolo computer. L'utente acquista
+         una licenza per utilizzare il programma su di un solo computer.
+
+         Gli utenti privati possono utilizzare la loro licenza per 
+         singolo computer su tutti i computer ed i dispositivi mobili 
+         (memorie USB, Dischi Rigidi esterni, ecc.) di proprietà del 
+         possessore della licenza.
+
+         Gli utenti "affari" devono acquistare una licenza d'uso per ogni 
+         computer o dispositivi mobili su cui è installato il programma.
+
+      b. Licenza d'utilizzo multiplo. L'utente acquista un numero di 
+         licenze d'uso con possibilità d'impiego da parte dell'acquirente o
+         dai suoi dipendenti, per un numero uguale di computer.
+
+         In un ambiente di rete client/server occorre acquistare una copia 
+         della licenza per ogni singolo client sul quale è installato, 
+         utilizzato o accede al programma.
+         È necessario acquistare una singola copia della licenza per ogni 
+         client indipendentemente dal numero di computer che eseguono 
+         contemporaneamente o in periodi differenti il programma.
+         Se ad esempio avete 9 client differenti nella vostra rete che 
+         accedono a RAR, dovete acquistare 9 copie della licenza d'uso.
+
+      All'utente che ha acquistato una licenza, è concesso un diritto non
+      esclusivo per usare il programma su tanti computer quanti quelli
+      definiti dai termini della licenza acquistata, per qualsiasi impiego
+      purché legale.
+
+   7. Non ci sono altri aggravi da pagare, oltre all'acquisto della licenza,
+      associate alla creazione ed alla distribuzione di archivi RAR normali,
+      multi-volume, auto-estraenti o multi-volume auto-estraenti. 
+      I proprietari di una licenza possono utilizzare le loro copie del 
+      programma per produrre archivi normali ed auto-estraenti e 
+      distribuire questi archivi liberi da qualsiasi altro pagamento.
+
+   8. Il programma registrato non può essere noleggiato ne dato in 
+      leasing, ma può essere trasferito in modo permanente, in tutta la 
+      sua interezza, se la persona che lo riceve è d'accordo con i termini 
+      della licenza che accompagna il programma.
+
+   9. Per acquistare una licenza d'uso del programma leggete il contenuto 
+      del file ordina.htm inserito nel pacchetto di distribuzione del 
+      programma.
+
+  10. Non potete usare, copiare, emulare, replicare, noleggiare, affittare, 
+      vendere, modificare, decompilare, diassemblare o trasferire i
+      programmi licenziati, o ogni parte di un programma licenziato, eccetto
+      per quanto previsto da questo accordo. Ogni simile utilizzo non
+      autorizzato si risolve nell'immediata ed automatica revoca di questa
+      licenza e tali atti possono essere perseguiti per legge.
+       
+      Ne il codice binario di RAR, il codice binario di WinRAR, il codice
+      binario di UnRAR ne il codice sorgente di UnRAR possono essere
+      utilizzati per risalire all'algoritmo di compressione di RAR in quanto
+      proprietario dell'autore, senza il suo permesso scritto.
+ 
+      Questo programma può utilizzare componenti sviluppati e/o coperti da 
+      diritti d'autore di terze parti. Siete pregati di leggere, per 
+      ottenere ulteriori dettagli, l'argomento "Riconoscimenti" nella 
+      Guida di WinRAR o il file di testo riconoscimenti.txt o acknow.txt 
+      presente nelle altre versioni di RAR.
+
+
+  11. Questo Accordo di licenza è costituito solo ed esclusivamente 
+      secondo la legge Tedesca. Se sei un commerciante, il foro 
+      competente, dove risiede l'ufficio di registrazione win.rar GmbH, è 
+      in Berlino/Germania ed ha l'esclusiva giurisdizione per qualsiasi 
+      disputa legata a questo Accordo di licenza o la sua validità.
+      
+  12. L'installazione e l'uso del programma stanno a significare 
+      l'accettazione dei termini e delle condizioni della licenza.
+      Se non siete d'accordo con i termini di questa licenza dovete
+      rimuovere i file del programma da qualsiasi vostro dispositivo su
+      cui è memorizzato ed astenervi dall'utilizzo di questo prodotto.

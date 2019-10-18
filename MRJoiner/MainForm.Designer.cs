@@ -83,7 +83,7 @@
             // fileToOverride
             // 
             this.fileToOverride.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.fileToOverride.Location = new System.Drawing.Point(425, 29);
+            this.fileToOverride.Location = new System.Drawing.Point(437, 29);
             this.fileToOverride.Name = "fileToOverride";
             this.fileToOverride.Size = new System.Drawing.Size(33, 23);
             this.fileToOverride.TabIndex = 0;
@@ -100,7 +100,7 @@
             this.textBox1.Enabled = false;
             this.textBox1.Location = new System.Drawing.Point(15, 30);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(404, 20);
+            this.textBox1.Size = new System.Drawing.Size(416, 20);
             this.textBox1.TabIndex = 1;
             // 
             // textBox2
@@ -111,13 +111,13 @@
             this.textBox2.Enabled = false;
             this.textBox2.Location = new System.Drawing.Point(15, 78);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(404, 20);
+            this.textBox2.Size = new System.Drawing.Size(416, 20);
             this.textBox2.TabIndex = 3;
             // 
             // filestozip
             // 
             this.filestozip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.filestozip.Location = new System.Drawing.Point(425, 77);
+            this.filestozip.Location = new System.Drawing.Point(437, 77);
             this.filestozip.Name = "filestozip";
             this.filestozip.Size = new System.Drawing.Size(33, 23);
             this.filestozip.TabIndex = 2;
@@ -133,7 +133,7 @@
             this.outputtext.Enabled = false;
             this.outputtext.Location = new System.Drawing.Point(16, 222);
             this.outputtext.Name = "outputtext";
-            this.outputtext.Size = new System.Drawing.Size(366, 20);
+            this.outputtext.Size = new System.Drawing.Size(378, 20);
             this.outputtext.TabIndex = 5;
             // 
             // label1
@@ -288,9 +288,9 @@
             this.groupBox1.Controls.Add(this.pass);
             this.groupBox1.Controls.Add(this.yesEnc);
             this.groupBox1.Controls.Add(this.noEnc);
-            this.groupBox1.Location = new System.Drawing.Point(15, 105);
+            this.groupBox1.Location = new System.Drawing.Point(15, 97);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(443, 81);
+            this.groupBox1.Size = new System.Drawing.Size(455, 81);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Encrypt";
@@ -315,7 +315,7 @@
             this.pass.Enabled = false;
             this.pass.Location = new System.Drawing.Point(153, 38);
             this.pass.Name = "pass";
-            this.pass.Size = new System.Drawing.Size(262, 20);
+            this.pass.Size = new System.Drawing.Size(286, 20);
             this.pass.TabIndex = 16;
             this.pass.UseSystemPasswordChar = true;
             // 
@@ -352,7 +352,7 @@
             // StartJ
             // 
             this.StartJ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.StartJ.Location = new System.Drawing.Point(388, 220);
+            this.StartJ.Location = new System.Drawing.Point(400, 220);
             this.StartJ.Name = "StartJ";
             this.StartJ.Size = new System.Drawing.Size(75, 23);
             this.StartJ.TabIndex = 16;
